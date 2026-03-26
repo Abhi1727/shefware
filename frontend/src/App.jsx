@@ -1,333 +1,469 @@
+import { useMemo, useState } from "react";
 import "./App.css";
-const clientLogos = ["Microsoft", "Google", "AWS", "IBM", "IMAP", "Exchange"];
-const expertiseCards = [
-  "Office 365 Migration",
-  "Tenant Migration",
-  "Email Conversion",
-  "Cloud Backup",
+
+const navItems = [
+  { label: "Solutions", href: "#solutions" },
+  { label: "Process", href: "#process" },
+  { label: "Why Shefware", href: "#why-shefware" },
+  { label: "Resources", href: "#resources" },
+  { label: "Contact", href: "#contact" },
 ];
+
+const partners = [
+  "Microsoft 365",
+  "Google Workspace",
+  "AWS",
+  "IBM",
+  "Dropbox",
+  "Salesforce",
+];
+
+const solutions = [
+  {
+    title: "Office 365 Migration",
+    description:
+      "Mailbox, calendar, and permission migration with zero-data-loss controls.",
+  },
+  {
+    title: "Tenant to Tenant Migration",
+    description:
+      "Secure cross-tenant transfer with identity mapping and policy continuity.",
+  },
+  {
+    title: "Email Conversion",
+    description:
+      "Convert PST, OST, EML, MBOX, and legacy formats for modern mail systems.",
+  },
+  {
+    title: "Cloud Backup",
+    description:
+      "Continuous backup architecture with immutable storage and fast restore.",
+  },
+];
+
+const processSteps = [
+  {
+    title: "Discovery & Planning",
+    description:
+      "We map source systems, define scope, and create a migration blueprint.",
+  },
+  {
+    title: "Pilot Migration",
+    description:
+      "A controlled pilot validates mappings, timeline, and risk assumptions.",
+  },
+  {
+    title: "Full-Scale Execution",
+    description:
+      "Batch-based migration with live monitoring, checkpoints, and rollback paths.",
+  },
+  {
+    title: "Optimization & Handover",
+    description:
+      "Performance tuning, documentation, and operational handover to your team.",
+  },
+];
+
 const metrics = [
-  { value: "25+", label: "Years Experience", tone: "light" },
-  { value: "99.9%", label: "Uptime", tone: "light" },
-  { value: "100%", label: "Security", tone: "success" },
-  { value: "1", label: "Unified Platform", tone: "light" },
-  { value: "24/7", label: "Monitoring", tone: "outline" },
-  { value: "100%", label: "Automation", tone: "dark" },
+  { value: "10M+", label: "Records Migrated" },
+  { value: "99.9%", label: "Platform Uptime" },
+  { value: "50+", label: "Enterprise Projects" },
+  { value: "24/7", label: "Monitoring & Support" },
 ];
-const tools = [
-  "Content Insights",
-  "Migration Validation",
-  "Archive Integrator",
-  "Migration Accelerator",
-  "Policy Engine",
-  "Content Integrator",
-];
+
 const resources = [
   {
-    type: "News",
-    title: "The Future of Email Archiving in 2024",
-    text: "Stay ahead of industry trends with our latest updates and announcements.",
+    title: "Migration Readiness Checklist",
+    description:
+      "A practical framework to assess systems, dependencies, and migration risk.",
+    cta: "Download Checklist",
   },
   {
-    type: "FAQs",
-    title: "Frequently Asked Questions",
-    text: "Everything you need to know about our migration engine and security protocols.",
+    title: "Security Architecture Brief",
+    description:
+      "Understand our encryption model, audit logging, and compliance controls.",
+    cta: "Read Brief",
   },
   {
-    type: "Blog",
-    title: "Migrating Terabytes: A Tactical Guide",
-    text: "Deep dives into technical challenges and how to solve them with Shefware.",
+    title: "Enterprise FAQ",
+    description:
+      "Answers to project timelines, rollback strategy, and integration patterns.",
+    cta: "View FAQ",
   },
 ];
 
+const initialFormState = {
+  fullName: "",
+  email: "",
+  company: "",
+  message: "",
+};
+
 function App() {
+  const [formState, setFormState] = useState(initialFormState);
+  const [submitState, setSubmitState] = useState({
+    status: "idle",
+    message: "",
+  });
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const apiBaseUrl = useMemo(() => {
+    const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL || "/api";
+    return configuredBaseUrl.replace(/\/$/, "");
+  }, []);
+
+  const onChangeFormField = (event) => {
+    const { name, value } = event.target;
+    setFormState((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+  const onSubmitContactForm = async (event) => {
+    event.preventDefault();
+    setSubmitState({
+      status: "loading",
+      message: "Sending your request...",
+    });
+
+    try {
+      const response = await fetch(`${apiBaseUrl}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || "Unable to send your request right now.");
+      }
+
+      setSubmitState({
+        status: "success",
+        message: data.message || "Thanks! We will reach out shortly.",
+      });
+      setFormState(initialFormState);
+    } catch (error) {
+      setSubmitState({
+        status: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    }
+  };
+
   return (
-    <div className="app-shell">
-      <header className="site-header container">
-        <a href="#" className="logo">
-          Shefware
-        </a>
-        <nav className="top-nav">
-          <a href="#solutions">Solutions</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#resources">Resources</a>
-          <a href="#footer">Contact</a>
-        </nav>
+    <div className="page-shell">
+      <header className="site-header">
+        <div className="container header-inner">
+          <a href="#top" className="brand">
+            <span className="brand-mark">S</span>
+            <span>Shefware</span>
+          </a>
+          <button
+            type="button"
+            className="menu-toggle"
+            onClick={() => setMenuOpen((current) => !current)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            Menu
+          </button>
+          <nav className={`main-nav ${menuOpen ? "open" : ""}`}>
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a href="#contact" className="btn btn-primary nav-cta">
+              Book a Demo
+            </a>
+          </nav>
+        </div>
       </header>
 
-      <main>
-        <section className="hero-intro">
-          <div className="container center-content">
-            <h1>Intelligence that builds Architectural Excellence.</h1>
-            <p>
-              A comprehensive ecosystem designed to streamline your digital
-              asset lifecycle, from ingestion and analysis to archival and
-              cross-platform integration.
-            </p>
-            <div className="hero-buttons">
-              <button className="btn btn-primary">Get Started</button>
-              <button className="btn btn-muted">Watch Demo</button>
-            </div>
-          </div>
-        </section>
-
-        <section className="hero-workspace container">
-          <article className="highlight-panel">
-            <h3>AI-powered migration platform</h3>
-            <p>
-              Shefware helps enterprise teams reduce risk and accelerate
-              high-volume, high-accuracy data migration projects.
-            </p>
-            <a href="#workflow" className="text-link">
-              Start your migration journey
-            </a>
-            <div className="ai-badge">
-              <p>AI INSIGHT</p>
-              <span>Automate 60% of metadata tagging with Insights.</span>
-            </div>
-          </article>
-          <article className="tools-panel">
-            <div className="tools-grid">
-              {tools.map((tool) => (
-                <div className="tool-item" key={tool}>
-                  <div className="tool-icon" />
-                  <div>
-                    <h4>{tool}</h4>
-                    <p>Built to simplify enterprise migration workflows.</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="tools-footer">
-              <span>Migration stack optimized for enterprise workloads</span>
-              <a href="#solutions">Explore all modules</a>
-            </div>
-          </article>
-        </section>
-
-        <section className="clients">
-          <div className="container">
-            <h2>Our Clients</h2>
-            <div className="logo-row">
-              {clientLogos.map((logo) => (
-                <div key={logo} className="logo-chip">
-                  {logo}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="solutions" className="section container section-center">
-          <h2>Migration Expertise</h2>
-          <p className="section-subtitle">
-            A suite of tools designed for enterprise-grade compatibility,
-            precision, and security.
-          </p>
-          <div className="expertise-grid">
-            {expertiseCards.map((title) => (
-              <article className="expertise-card" key={title}>
-                <div className="card-icon" />
-                <h4>{title}</h4>
-                <p>High-performance pipelines with full compliance controls.</p>
-                <a href="#">Learn more</a>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="migration-experts">
-          <div className="container split-2">
-            <div className="image-placeholder">IT Expert Visual</div>
-            <div>
-              <h2>Migrate Data from Any SOURCE to Any TARGET!</h2>
-              <p>
-                Our engine is built for universal compatibility across cloud and
-                on-prem systems.
+      <main id="top">
+        <section className="hero-section">
+          <div className="container hero-grid">
+            <div className="hero-content">
+              <p className="eyebrow">AI-powered enterprise data migration</p>
+              <h1>
+                Transform Data.
+                <br />
+                Simplify Migration.
+                <br />
+                Enable AI Innovation.
+              </h1>
+              <p className="hero-text">
+                Shefware helps organizations move from legacy infrastructure to
+                modern cloud ecosystems with performance, governance, and
+                reliability built in.
               </p>
-              <ul className="check-list">
-                <li>Supports legacy and modern platforms</li>
-                <li>Automated transformation and mapping</li>
-                <li>Security-first migration process</li>
-              </ul>
-              <button className="btn btn-primary">Start Migration Now</button>
-            </div>
-          </div>
-        </section>
-
-        <section className="trust-banner container">
-          <div>
-            <h3>Trusted Migration Partner for Enterprises</h3>
-            <p>Secure, scalable, and compliant architecture for global teams.</p>
-          </div>
-          <button className="btn btn-light">Talk to us</button>
-        </section>
-
-        <section className="workflow-features">
-          <div className="container section-center">
-            <h2>Workflow Features that Keep Teams Efficient</h2>
-            <div className="feature-row">
-              <article>
-                <div className="box-icon" />
-                <h4>Fast Onboarding</h4>
-                <p>Set up and configure migration pipelines in minutes.</p>
-              </article>
-              <article>
-                <div className="box-icon" />
-                <h4>Realtime Validation</h4>
-                <p>Monitor and validate each batch before final commit.</p>
-              </article>
-              <article>
-                <div className="box-icon" />
-                <h4>Smart Automation</h4>
-                <p>Reduce manual effort using policy-driven intelligence.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="section container">
-          <div className="metrics-intro">
-            <h2>Why Leading Enterprises Choose Shefware</h2>
-          </div>
-          <div className="metrics-grid">
-            {metrics.map((item) => (
-              <article key={item.label} className={`metric-card ${item.tone}`}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="infra-section">
-          <div className="container split-2">
-            <div>
-              <h2>Secure Infrastructure with 99.9% Uptime</h2>
-              <p>
-                Hosted on Tier-4 infrastructure with geo-redundancy and
-                AI-driven balancing.
-              </p>
-              <div className="infra-points">
+              <div className="hero-actions">
+                <a href="#contact" className="btn btn-primary">
+                  Start Your Project
+                </a>
+                <a href="#process" className="btn btn-secondary">
+                  Explore Process
+                </a>
+              </div>
+              <div className="hero-kpis">
                 <div>
-                  <h5>Global Redundancy</h5>
-                  <span>Active-active deployment in multiple regions.</span>
+                  <strong>1M+</strong>
+                  <span>Mailboxes migrated</span>
                 </div>
                 <div>
-                  <h5>Data Encryption</h5>
-                  <span>End-to-end encrypted at rest and in transit.</span>
+                  <strong>100+</strong>
+                  <span>Migration workflows</span>
                 </div>
                 <div>
-                  <h5>Observability</h5>
-                  <span>Realtime logs, metrics, and security anomaly alerts.</span>
+                  <strong>10+</strong>
+                  <span>Years in delivery</span>
                 </div>
               </div>
             </div>
-            <div className="image-placeholder dark">Infrastructure Visual</div>
+            <aside className="hero-panel">
+              <h3>Migration Control Center</h3>
+              <p>
+                Configure source systems, choose targets, enforce policy, and
+                monitor each batch in real-time.
+              </p>
+              <ul>
+                <li>End-to-end encryption and audit trails</li>
+                <li>Cutover planning with rollback checkpoints</li>
+                <li>Built-in validation and exception reporting</li>
+              </ul>
+              <a href="#contact" className="panel-link">
+                Request implementation support
+              </a>
+            </aside>
           </div>
         </section>
 
-        <section className="ecosystem">
-          <div className="container section-center">
-            <h2>Works with Your Email Ecosystem</h2>
-            <div className="ecosystem-row">
-              <div>Gmail</div>
-              <div>Yahoo</div>
-              <div>Exchange</div>
-              <div>Office 365</div>
-              <div>IMAP</div>
+        <section className="partners-strip">
+          <div className="container">
+            <p>Trusted by modern IT teams across global ecosystems</p>
+            <div className="partners-grid">
+              {partners.map((partner) => (
+                <a key={partner} href="#contact" className="partner-pill">
+                  {partner}
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
-        <section id="workflow" className="workflow-steps">
-          <div className="container section-center">
-            <h2>How Shefware Works</h2>
+        <section id="solutions" className="section container">
+          <div className="section-heading">
+            <p className="eyebrow">Comprehensive IT solutions</p>
+            <h2>Our all-in-one email and data services</h2>
             <p>
-              A streamlined process to launch migrations quickly and safely.
+              Modular services designed for enterprise delivery, whether you are
+              modernizing one business unit or migrating globally.
             </p>
-            <div className="steps-grid">
-              <article>
-                <div className="step-number">1</div>
-                <h4>Assess</h4>
-                <p>Audit current systems and map your migration scope.</p>
-              </article>
-              <article>
-                <div className="step-number">2</div>
-                <h4>Configure</h4>
-                <p>Define mappings, policies, and validation criteria.</p>
-              </article>
-              <article>
-                <div className="step-number">3</div>
-                <h4>Migrate</h4>
-                <p>Run secure migration with continuous monitoring.</p>
-              </article>
-              <article>
-                <div className="step-number">4</div>
-                <h4>Optimize</h4>
-                <p>Review outcomes and improve through analytics.</p>
-              </article>
-            </div>
-            <button className="btn btn-primary">Get Started</button>
           </div>
-        </section>
-
-        <section id="resources" className="section container section-center">
-          <h2>Resources to Help You Stay on Top of IT</h2>
-          <div className="resource-grid">
-            {resources.map((item) => (
-              <article key={item.title} className="resource-card">
-                <div className="resource-image" />
-                <div className="resource-body">
-                  <span>{item.type}</span>
-                  <h4>{item.title}</h4>
-                  <p>{item.text}</p>
-                </div>
+          <div className="cards-grid">
+            {solutions.map((solution) => (
+              <article key={solution.title} className="info-card">
+                <div className="card-icon" />
+                <h3>{solution.title}</h3>
+                <p>{solution.description}</p>
+                <a href="#contact">Talk to an expert</a>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section id="process" className="section section-alt">
+          <div className="container">
+            <div className="section-heading">
+              <p className="eyebrow">Execution framework</p>
+              <h2>Migrate data from any source to any target</h2>
+              <p>
+                Our delivery process minimizes downtime and aligns every stage
+                with your business continuity requirements.
+              </p>
+            </div>
+            <div className="steps-layout">
+              {processSteps.map((step, index) => (
+                <article key={step.title} className="step-card">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="why-shefware" className="section container">
+          <div className="section-heading">
+            <p className="eyebrow">Why choose Shefware</p>
+            <h2>Professional architecture for secure scale</h2>
+            <p>
+              Every project is designed around governance, resilience, and
+              measurable outcomes for your IT and compliance teams.
+            </p>
+          </div>
+          <div className="metric-grid">
+            {metrics.map((metric) => (
+              <article key={metric.label} className="metric-card">
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+              </article>
+            ))}
+          </div>
+          <div className="cta-banner">
+            <div>
+              <h3>Ready to transform your IT infrastructure?</h3>
+              <p>
+                Build your migration roadmap with certified specialists and
+                enterprise delivery support.
+              </p>
+            </div>
+            <a href="#contact" className="btn btn-primary">
+              Schedule Consultation
+            </a>
+          </div>
+        </section>
+
+        <section id="resources" className="section section-alt">
+          <div className="container">
+            <div className="section-heading">
+              <p className="eyebrow">Knowledge center</p>
+              <h2>Resources to support your migration decisions</h2>
+              <p>
+                Practical guides and architecture notes to help leadership and
+                engineering teams align quickly.
+              </p>
+            </div>
+            <div className="resource-grid">
+              {resources.map((resource) => (
+                <article key={resource.title} className="resource-card">
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                  <a href="#contact">{resource.cta}</a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="section container">
+          <div className="contact-layout">
+            <div>
+              <p className="eyebrow">Contact us</p>
+              <h2>Start your migration with a technical consultation</h2>
+              <p className="contact-copy">
+                Share your current environment and migration goals. Our team
+                will respond with an execution plan and timeline.
+              </p>
+              <div className="contact-points">
+                <a href="mailto:hello@shefware.com">hello@shefware.com</a>
+                <a href="tel:+919999999999">+91 99999 99999</a>
+              </div>
+            </div>
+
+            <form className="contact-form" onSubmit={onSubmitContactForm}>
+              <label htmlFor="fullName">Full Name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                value={formState.fullName}
+                onChange={onChangeFormField}
+                placeholder="Your name"
+                required
+              />
+
+              <label htmlFor="email">Work Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formState.email}
+                onChange={onChangeFormField}
+                placeholder="name@company.com"
+                required
+              />
+
+              <label htmlFor="company">Company</label>
+              <input
+                id="company"
+                name="company"
+                value={formState.company}
+                onChange={onChangeFormField}
+                placeholder="Your company"
+              />
+
+              <label htmlFor="message">Project Requirement</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formState.message}
+                onChange={onChangeFormField}
+                placeholder="Tell us about source, target, data size, and timeline..."
+                required
+              />
+
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={submitState.status === "loading"}
+              >
+                {submitState.status === "loading"
+                  ? "Sending..."
+                  : "Submit Request"}
+              </button>
+              {submitState.message && (
+                <p className={`form-message ${submitState.status}`}>
+                  {submitState.message}
+                </p>
+              )}
+            </form>
           </div>
         </section>
       </main>
 
-      <footer id="footer" className="site-footer">
-        <div className="container footer-top">
+      <footer className="site-footer">
+        <div className="container footer-grid">
           <div>
-            <h4>Shefware</h4>
+            <a href="#top" className="brand footer-brand">
+              <span className="brand-mark">S</span>
+              <span>Shefware</span>
+            </a>
             <p>
-              Enterprise-grade migration platform for secure, intelligent, and
-              scalable data transformation.
+              Enterprise-grade data migration and modernization platform for
+              secure, intelligent, and scalable transformation.
             </p>
           </div>
           <div>
-            <h5>Solutions</h5>
-            <a href="#">Office 365</a>
-            <a href="#">Exchange</a>
-            <a href="#">Gmail</a>
-            <a href="#">IMAP</a>
+            <h4>Company</h4>
+            <a href="#solutions">Solutions</a>
+            <a href="#why-shefware">Why Shefware</a>
+            <a href="#resources">Resources</a>
           </div>
           <div>
-            <h5>Resources</h5>
-            <a href="#">News</a>
-            <a href="#">FAQs</a>
-            <a href="#">Blogs</a>
-            <a href="#">API Docs</a>
-          </div>
-          <div>
-            <h5>Newsletter</h5>
-            <p>Subscribe for the latest in IT infrastructure and data security.</p>
-            <div className="newsletter-row">
-              <input placeholder="Your email" />
-              <button>Join</button>
-            </div>
+            <h4>Support</h4>
+            <a href="#contact">Contact Us</a>
+            <a href="mailto:hello@shefware.com">Email Support</a>
+            <a href="tel:+919999999999">Call Us</a>
           </div>
         </div>
         <div className="container footer-bottom">
           <span>© {new Date().getFullYear()} Shefware. All rights reserved.</span>
           <div>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Security</a>
-            <a href="#">Support</a>
+            <a href="#top">Privacy</a>
+            <a href="#top">Terms</a>
+            <a href="#top">Security</a>
           </div>
         </div>
       </footer>
