@@ -79,26 +79,34 @@ jobs:
           path: .
 
       - name: Prepare SSH Key File
+        id: prepare_ssh_key
         run: |
           set -euo pipefail
+          KEY_FILE=".tmp_deploy_key"
           if [[ -n "${B64_PRIVATE_KEY:-}" ]]; then
-            echo "$B64_PRIVATE_KEY" | base64 --decode > .tmp_deploy_key
+            echo "$B64_PRIVATE_KEY" | base64 --decode > "$KEY_FILE"
           elif [[ -n "${RAW_PRIVATE_KEY:-}" ]]; then
-            printf '%s\n' "$RAW_PRIVATE_KEY" > .tmp_deploy_key
+            printf '%s\n' "$RAW_PRIVATE_KEY" > "$KEY_FILE"
           else
             echo "Missing SSH private key secret." >&2
             exit 1
           fi
 
-          chmod 600 .tmp_deploy_key
-          ssh-keygen -y -f .tmp_deploy_key > /dev/null
+          chmod 600 "$KEY_FILE"
+          ssh-keygen -y -f "$KEY_FILE" > /dev/null
+
+          {
+            echo "key<<EOF"
+            cat "$KEY_FILE"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Copy Artifact to Server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
-          key_path: .tmp_deploy_key
+          key: ${{ steps.prepare_ssh_key.outputs.key }}
           port: ${{ env.DEPLOY_PORT || 22 }}
           source: "deploy_bundle.tar.gz"
           target: "/tmp"
@@ -111,7 +119,7 @@ jobs:
         with:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
-          key_path: .tmp_deploy_key
+          key: ${{ steps.prepare_ssh_key.outputs.key }}
           port: ${{ env.DEPLOY_PORT || 22 }}
           envs: DEPLOY_PATH,PM2_APP_NAME
           script: |
@@ -128,7 +136,3 @@ jobs:
             "$WORK_DIR/scripts/deploy-from-bundle.sh" "$WORK_DIR" "$APP_ROOT" "$PM2_NAME"
 
             rm -rf "$WORK_DIR" /tmp/deploy_bundle.tar.gz
-
-      - name: Cleanup SSH Key File
-        if: always()
-        run: rm -f .tmp_deploy_key
