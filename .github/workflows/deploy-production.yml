@@ -101,6 +101,29 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Preflight SSH Reachability
+        run: |
+          set -euo pipefail
+          HOST="${DEPLOY_HOST:-}"
+          PORT="${DEPLOY_PORT:-22}"
+
+          if [[ -z "$HOST" ]]; then
+            echo "Missing deploy host (SSH_HOST/VPS_HOST)." >&2
+            exit 1
+          fi
+
+          for attempt in 1 2 3; do
+            echo "Checking TCP reachability to ${HOST}:${PORT} (attempt ${attempt}/3)..."
+            if timeout 10 bash -c "cat < /dev/null > /dev/tcp/${HOST}/${PORT}" 2>/dev/null; then
+              echo "TCP check passed."
+              exit 0
+            fi
+            sleep 5
+          done
+
+          echo "Cannot reach ${HOST}:${PORT} from GitHub runner (TCP timeout)." >&2
+          exit 1
+
       - name: Copy Artifact to Server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -108,6 +131,8 @@ jobs:
           username: ${{ env.DEPLOY_USER }}
           key: ${{ steps.prepare_ssh_key.outputs.key }}
           port: ${{ env.DEPLOY_PORT || 22 }}
+          timeout: 120s
+          command_timeout: 15m
           source: "deploy_bundle.tar.gz"
           target: "/tmp"
 
@@ -121,6 +146,8 @@ jobs:
           username: ${{ env.DEPLOY_USER }}
           key: ${{ steps.prepare_ssh_key.outputs.key }}
           port: ${{ env.DEPLOY_PORT || 22 }}
+          timeout: 120s
+          command_timeout: 20m
           envs: DEPLOY_PATH,PM2_APP_NAME
           script: |
             set -euo pipefail
