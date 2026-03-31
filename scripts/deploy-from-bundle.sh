@@ -80,7 +80,10 @@ echo "Syncing backend..."
 "$RSYNC_BIN" -a --delete --exclude ".env" "$BUNDLE_DIR/backend/" "$BACKEND_DIR/"
 
 echo "Installing backend dependencies..."
-"$NPM_BIN" ci --omit=dev --prefix "$BACKEND_DIR"
+if ! "$NPM_BIN" ci --omit=dev --prefix "$BACKEND_DIR"; then
+  echo "npm ci failed, falling back to npm install --omit=dev..."
+  "$NPM_BIN" install --omit=dev --prefix "$BACKEND_DIR"
+fi
 
 echo "Syncing frontend dist..."
 "$RSYNC_BIN" -a --delete "$BUNDLE_DIR/frontend/dist/" "$FRONTEND_DIST_DIR/"
@@ -102,15 +105,19 @@ fi
 if [[ -f "$BACKEND_DIR/.env" && -f "/etc/nginx/sites-available/shefware.com" ]]; then
   echo "Applying indexing mode and reloading nginx..."
   if command -v sudo >/dev/null 2>&1; then
-    sudo -n "$SCRIPTS_DIR/apply-indexing-mode.sh" \
+    if ! sudo -n "$SCRIPTS_DIR/apply-indexing-mode.sh" \
       "$BACKEND_DIR/.env" \
       "/etc/nginx/sites-available/shefware.com" \
-      "$FRONTEND_DIST_DIR"
+      "$FRONTEND_DIST_DIR"; then
+      echo "Warning: apply-indexing-mode failed via sudo; continuing deploy." >&2
+    fi
   else
-    "$SCRIPTS_DIR/apply-indexing-mode.sh" \
+    if ! "$SCRIPTS_DIR/apply-indexing-mode.sh" \
       "$BACKEND_DIR/.env" \
       "/etc/nginx/sites-available/shefware.com" \
-      "$FRONTEND_DIST_DIR"
+      "$FRONTEND_DIST_DIR"; then
+      echo "Warning: apply-indexing-mode failed; continuing deploy." >&2
+    fi
   fi
 else
   echo "Skipping apply-indexing-mode (missing .env or nginx config)."
@@ -118,6 +125,20 @@ fi
 
 PORT_VALUE="$(awk -F= '/^PORT=/{print $2}' "$BACKEND_DIR/.env" 2>/dev/null | tr -d '[:space:]')"
 PORT_VALUE="${PORT_VALUE:-5000}"
-"$CURL_BIN" -fsS "http://127.0.0.1:${PORT_VALUE}/api/health" >/dev/null
+echo "Waiting for API health on port ${PORT_VALUE}..."
+HEALTH_OK=0
+for _ in {1..20}; do
+  if "$CURL_BIN" -fsS "http://127.0.0.1:${PORT_VALUE}/api/health" >/dev/null; then
+    HEALTH_OK=1
+    break
+  fi
+  sleep 2
+done
+
+if [[ "$HEALTH_OK" -ne 1 ]]; then
+  echo "Warning: API health check did not pass in time; PM2 process state:" >&2
+  "$PM2_BIN" list || true
+  exit 1
+fi
 
 echo "Deployment complete. Health check passed on port ${PORT_VALUE}."
