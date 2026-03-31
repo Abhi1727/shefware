@@ -2,10 +2,11 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import "./App.css";
 
 const navItems = [
-  { label: "PRODUCTS", href: "#solutions" },
-  { label: "SERVICES", href: "#process" },
-  { label: "MARKET PLACE", href: "#why-shefware" },
-  { label: "WHY SHEFWARE", href: "#why-shefware" },
+  { label: "Solutions", href: "#solutions" },
+  { label: "Process", href: "#process" },
+  { label: "Why Shefware", href: "#why-shefware" },
+  { label: "Resources", href: "#resources" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const partners = [
@@ -22,25 +23,25 @@ const solutions = [
     title: "Office 365 Migration",
     description:
       "Mailbox, calendar, and permission migration with zero-data-loss controls.",
-    icon: "📧"
+    icon: "📧",
   },
   {
     title: "Tenant to Tenant Migration",
     description:
       "Secure cross-tenant transfer with identity mapping and policy continuity.",
-    icon: "🔄"
+    icon: "�",
   },
   {
     title: "Email Conversion",
     description:
       "Convert PST, OST, EML, MBOX, and legacy formats for modern mail systems.",
-    icon: "📬"
+    icon: "�",
   },
   {
     title: "Cloud Backup",
     description:
       "Continuous backup architecture with immutable storage and fast restore.",
-    icon: "☁️"
+    icon: "☁️",
   },
 ];
 
@@ -49,25 +50,25 @@ const processSteps = [
     title: "Discovery & Planning",
     description:
       "We map source systems, define scope, and create a migration blueprint.",
-    icon: "🔍"
+    icon: "�",
   },
   {
     title: "Pilot Migration",
     description:
       "A controlled pilot validates mappings, timeline, and risk assumptions.",
-    icon: "🚀"
+    icon: "�",
   },
   {
     title: "Full-Scale Execution",
     description:
       "Batch-based migration with live monitoring, checkpoints, and rollback paths.",
-    icon: "⚡"
+    icon: "⚡",
   },
   {
     title: "Optimization & Handover",
     description:
       "Performance tuning, documentation, and operational handover to your team.",
-    icon: "🎯"
+    icon: "🎯",
   },
 ];
 
@@ -117,36 +118,36 @@ const AnimatedCounter = ({ end, suffix = "", duration = 2000 }) => {
     const animate = (timestamp) => {
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
-      
+
       // Easing function for smooth animation
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      
+
       // Parse the end value to handle different formats
       let numericEnd = end;
-      if (typeof end === 'string') {
+      if (typeof end === "string") {
         // Extract numeric part from strings like "10M+" or "99.9%"
         const match = end.match(/[\d.]+/);
         if (match) {
           numericEnd = parseFloat(match[0]);
         }
       }
-      
+
       const currentCount = numericEnd * easeOutQuart;
-      
+
       // Format the display value
       let displayValue;
-      if (typeof end === 'string' && end.includes('M')) {
-        displayValue = (currentCount / 1000000).toFixed(1) + 'M+';
-      } else if (typeof end === 'string' && end.includes('%')) {
-        displayValue = currentCount.toFixed(1) + '%';
-      } else if (typeof end === 'string' && end.includes('+')) {
-        displayValue = Math.floor(currentCount).toLocaleString() + '+';
+      if (typeof end === "string" && end.includes("M")) {
+        displayValue = (currentCount / 1000000).toFixed(1) + "M+";
+      } else if (typeof end === "string" && end.includes("%")) {
+        displayValue = currentCount.toFixed(1) + "%";
+      } else if (typeof end === "string" && end.includes("+")) {
+        displayValue = Math.floor(currentCount).toLocaleString() + "+";
       } else {
         displayValue = Math.floor(currentCount).toLocaleString();
       }
-      
+
       setCount(displayValue);
-      
+
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(animate);
       }
@@ -192,11 +193,11 @@ const useIntersectionObserver = (ref, options = {}) => {
 const AnimatedSection = ({ children, className, animationDelay = 0 }) => {
   const sectionRef = useRef(null);
   const isVisible = useIntersectionObserver(sectionRef, { threshold: 0.1 });
-  
+
   return (
-    <div 
+    <div
       ref={sectionRef}
-      className={`${className || ''} ${isVisible ? 'animate-in' : 'animate-out'}`}
+      className={`${className || ""} ${isVisible ? "animate-in" : "animate-out"}`}
       style={{ animationDelay: `${animationDelay}ms` }}
     >
       {children}
@@ -264,27 +265,15 @@ function App() {
 
   return (
     <div className="page-shell">
-      <a href="#main-content" className="skip-link">Skip to main content</a>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <header className="site-header">
         <div className="container header-inner">
           <a href="#top" className="brand">
             <span className="brand-mark">S</span>
             <span>Shefware</span>
           </a>
-          
-          <div className="header-utils">
-            <a href="#support" className="header-link">Support</a>
-            <a href="#about" className="header-link">About Us</a>
-            <a href="#contact" className="header-link">Contact Us</a>
-            <button className="btn btn-offer">OFFER</button>
-            <button className="search-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-              </svg>
-            </button>
-          </div>
-          
           <button
             type="button"
             className="menu-toggle"
@@ -304,38 +293,68 @@ function App() {
                 {item.label}
               </a>
             ))}
+            <a href="#contact" className="btn btn-primary nav-cta">
+              Book a Demo
+            </a>
           </nav>
         </div>
       </header>
 
       <main id="main-content">
         <section className="hero-section">
-          <div className="hero-background">
-            <div className="hero-overlay"></div>
-          </div>
-          <div className="container hero-content">
-            <h1 className="hero-title">
-              <span className="title-white">Transform Data.</span>
-              <span className="title-blue">Simplify Migration.</span>
-              <span className="title-white">Enable AI Innovation.</span>
-            </h1>
-            <p className="hero-description">
-              Shefware is an AI-driven SaaS platform for email migration, conversion, and backup. Built to make email management simple, quick, and reliable.
-            </p>
-            <div className="hero-statistics">
-              <div className="stat-item">
-                <div className="stat-number">1 Million+</div>
-                <div className="stat-label">HAPPY CLIENTS</div>
+          <div className="container hero-grid">
+            <div className="hero-content">
+              <p className="eyebrow">AI-powered enterprise data migration</p>
+              <h1>
+                Transform Data.
+                <br />
+                Simplify Migration.
+                <br />
+                Enable AI Innovation.
+              </h1>
+              <p className="hero-text">
+                Shefware helps organizations move from legacy infrastructure to
+                modern cloud ecosystems with performance, governance, and
+                reliability built in.
+              </p>
+              <div className="hero-actions">
+                <a href="#contact" className="btn btn-primary">
+                  Start Your Project
+                </a>
+                <a href="#process" className="btn btn-secondary">
+                  Explore Process
+                </a>
               </div>
-              <div className="stat-item">
-                <div className="stat-number">100+</div>
-                <div className="stat-label">PRODUCTS</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">10+</div>
-                <div className="stat-label">YEARS EXPERIENCE</div>
+              <div className="hero-kpis">
+                <div>
+                  <strong>1M+</strong>
+                  <span>Mailboxes migrated</span>
+                </div>
+                <div>
+                  <strong>100+</strong>
+                  <span>Migration workflows</span>
+                </div>
+                <div>
+                  <strong>10+</strong>
+                  <span>Years in delivery</span>
+                </div>
               </div>
             </div>
+            <aside className="hero-panel">
+              <h3>Migration Control Center</h3>
+              <p>
+                Configure source systems, choose targets, enforce policy, and
+                monitor each batch in real-time.
+              </p>
+              <ul>
+                <li>End-to-end encryption and audit trails</li>
+                <li>Cutover planning with rollback checkpoints</li>
+                <li>Built-in validation and exception reporting</li>
+              </ul>
+              <a href="#contact" className="panel-link">
+                Request implementation support
+              </a>
+            </aside>
           </div>
         </section>
 
@@ -413,7 +432,7 @@ function App() {
             {metrics.map((metric, index) => {
               const metricRef = useRef(null);
               const isVisible = useIntersectionObserver(metricRef, { threshold: 0.3 });
-              
+
               return (
                 <article key={metric.label} className="metric-card">
                   <strong ref={metricRef}>

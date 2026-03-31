@@ -101,28 +101,52 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Preflight SSH Reachability
+      - name: Resolve Deploy Port and Preflight Reachability
+        id: resolve_deploy_target
         run: |
           set -euo pipefail
           HOST="${DEPLOY_HOST:-}"
-          PORT="${DEPLOY_PORT:-22}"
+          PORT_RAW="${DEPLOY_PORT:-}"
+          PORT="22"
 
           if [[ -z "$HOST" ]]; then
             echo "Missing deploy host (SSH_HOST/VPS_HOST)." >&2
             exit 1
           fi
 
-          for attempt in 1 2 3; do
-            echo "Checking TCP reachability to ${HOST}:${PORT} (attempt ${attempt}/3)..."
-            if timeout 10 bash -c "cat < /dev/null > /dev/tcp/${HOST}/${PORT}" 2>/dev/null; then
-              echo "TCP check passed."
-              exit 0
-            fi
-            sleep 5
-          done
+          if [[ -n "$PORT_RAW" && "$PORT_RAW" =~ ^[0-9]+$ ]]; then
+            PORT="$PORT_RAW"
+          fi
 
-          echo "Cannot reach ${HOST}:${PORT} from GitHub runner (TCP timeout)." >&2
-          exit 1
+          check_tcp() {
+            local h="$1"
+            local p="$2"
+            for attempt in 1 2 3; do
+              echo "Checking TCP reachability to ${h}:${p} (attempt ${attempt}/3)..."
+              if timeout 10 bash -c "cat < /dev/null > /dev/tcp/${h}/${p}" 2>/dev/null; then
+                return 0
+              fi
+              sleep 5
+            done
+            return 1
+          }
+
+          EFFECTIVE_PORT="$PORT"
+          if check_tcp "$HOST" "$PORT"; then
+            echo "TCP check passed on ${HOST}:${PORT}."
+          elif [[ "$PORT" != "22" ]] && check_tcp "$HOST" "22"; then
+            EFFECTIVE_PORT="22"
+            echo "Configured port ${PORT} is unreachable; falling back to port 22."
+          else
+            echo "Cannot reach ${HOST}:${PORT} from GitHub runner (TCP timeout)." >&2
+            if [[ "$PORT" != "22" ]]; then
+              echo "Also cannot reach ${HOST}:22 from GitHub runner (TCP timeout)." >&2
+            fi
+            exit 1
+          fi
+
+          echo "effective_port=${EFFECTIVE_PORT}" >> "$GITHUB_OUTPUT"
+          echo "Using deploy port: ${EFFECTIVE_PORT}"
 
       - name: Copy Artifact to Server
         uses: appleboy/scp-action@v0.1.7
@@ -130,7 +154,7 @@ jobs:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
           key: ${{ steps.prepare_ssh_key.outputs.key }}
-          port: ${{ env.DEPLOY_PORT || 22 }}
+          port: ${{ steps.resolve_deploy_target.outputs.effective_port }}
           timeout: 120s
           command_timeout: 15m
           source: "deploy_bundle.tar.gz"
@@ -145,7 +169,7 @@ jobs:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
           key: ${{ steps.prepare_ssh_key.outputs.key }}
-          port: ${{ env.DEPLOY_PORT || 22 }}
+          port: ${{ steps.resolve_deploy_target.outputs.effective_port }}
           timeout: 120s
           command_timeout: 20m
           envs: DEPLOY_PATH,PM2_APP_NAME
