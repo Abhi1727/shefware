@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import "./App.css";
 
 const navItems = [
@@ -23,21 +23,25 @@ const solutions = [
     title: "Office 365 Migration",
     description:
       "Mailbox, calendar, and permission migration with zero-data-loss controls.",
+    icon: "📧"
   },
   {
     title: "Tenant to Tenant Migration",
     description:
       "Secure cross-tenant transfer with identity mapping and policy continuity.",
+    icon: "🔄"
   },
   {
     title: "Email Conversion",
     description:
       "Convert PST, OST, EML, MBOX, and legacy formats for modern mail systems.",
+    icon: "📬"
   },
   {
     title: "Cloud Backup",
     description:
       "Continuous backup architecture with immutable storage and fast restore.",
+    icon: "☁️"
   },
 ];
 
@@ -46,21 +50,25 @@ const processSteps = [
     title: "Discovery & Planning",
     description:
       "We map source systems, define scope, and create a migration blueprint.",
+    icon: "🔍"
   },
   {
     title: "Pilot Migration",
     description:
       "A controlled pilot validates mappings, timeline, and risk assumptions.",
+    icon: "🚀"
   },
   {
     title: "Full-Scale Execution",
     description:
       "Batch-based migration with live monitoring, checkpoints, and rollback paths.",
+    icon: "⚡"
   },
   {
     title: "Optimization & Handover",
     description:
       "Performance tuning, documentation, and operational handover to your team.",
+    icon: "🎯"
   },
 ];
 
@@ -97,6 +105,104 @@ const initialFormState = {
   email: "",
   company: "",
   message: "",
+};
+
+// Animated Counter Component
+const AnimatedCounter = ({ end, suffix = "", duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(0);
+  const startTimeRef = useRef(null);
+  const frameRef = useRef(null);
+
+  useEffect(() => {
+    const animate = (timestamp) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      
+      // Parse the end value to handle different formats
+      let numericEnd = end;
+      if (typeof end === 'string') {
+        // Extract numeric part from strings like "10M+" or "99.9%"
+        const match = end.match(/[\d.]+/);
+        if (match) {
+          numericEnd = parseFloat(match[0]);
+        }
+      }
+      
+      const currentCount = numericEnd * easeOutQuart;
+      
+      // Format the display value
+      let displayValue;
+      if (typeof end === 'string' && end.includes('M')) {
+        displayValue = (currentCount / 1000000).toFixed(1) + 'M+';
+      } else if (typeof end === 'string' && end.includes('%')) {
+        displayValue = currentCount.toFixed(1) + '%';
+      } else if (typeof end === 'string' && end.includes('+')) {
+        displayValue = Math.floor(currentCount).toLocaleString() + '+';
+      } else {
+        displayValue = Math.floor(currentCount).toLocaleString();
+      }
+      
+      setCount(displayValue);
+      
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    // Start animation when component mounts
+    frameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, [end, duration]);
+
+  return <span>{count}</span>;
+};
+
+// Intersection Observer Hook for scroll animations
+const useIntersectionObserver = (ref, options = {}) => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsIntersecting(entry.isIntersecting);
+    }, options);
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref, options]);
+
+  return isIntersecting;
+};
+
+// Animated Section Component
+const AnimatedSection = ({ children, className, animationDelay = 0 }) => {
+  const sectionRef = useRef(null);
+  const isVisible = useIntersectionObserver(sectionRef, { threshold: 0.1 });
+  
+  return (
+    <div 
+      ref={sectionRef}
+      className={`${className || ''} ${isVisible ? 'animate-in' : 'animate-out'}`}
+      style={{ animationDelay: `${animationDelay}ms` }}
+    >
+      {children}
+    </div>
+  );
 };
 
 function App() {
@@ -159,6 +265,7 @@ function App() {
 
   return (
     <div className="page-shell">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <header className="site-header">
         <div className="container header-inner">
           <a href="#top" className="brand">
@@ -191,7 +298,7 @@ function App() {
         </div>
       </header>
 
-      <main id="top">
+      <main id="main-content">
         <section className="hero-section">
           <div className="container hero-grid">
             <div className="hero-content">
@@ -262,7 +369,7 @@ function App() {
           </div>
         </section>
 
-        <section id="solutions" className="section container">
+        <AnimatedSection id="solutions" className="section container">
           <div className="section-heading">
             <p className="eyebrow">Comprehensive IT solutions</p>
             <h2>Our all-in-one email and data services</h2>
@@ -274,16 +381,18 @@ function App() {
           <div className="cards-grid">
             {solutions.map((solution) => (
               <article key={solution.title} className="info-card">
-                <div className="card-icon" />
+                <div className="card-icon">
+                  <span className="icon-emoji">{solution.icon}</span>
+                </div>
                 <h3>{solution.title}</h3>
                 <p>{solution.description}</p>
                 <a href="#contact">Talk to an expert</a>
               </article>
             ))}
           </div>
-        </section>
+        </AnimatedSection>
 
-        <section id="process" className="section section-alt">
+        <AnimatedSection id="process" className="section section-alt">
           <div className="container">
             <div className="section-heading">
               <p className="eyebrow">Execution framework</p>
@@ -296,16 +405,19 @@ function App() {
             <div className="steps-layout">
               {processSteps.map((step, index) => (
                 <article key={step.title} className="step-card">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div className="step-header">
+                    <span className="step-number">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="step-icon">{step.icon}</span>
+                  </div>
                   <h3>{step.title}</h3>
                   <p>{step.description}</p>
                 </article>
               ))}
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
-        <section id="why-shefware" className="section container">
+        <AnimatedSection id="why-shefware" className="section container">
           <div className="section-heading">
             <p className="eyebrow">Why choose Shefware</p>
             <h2>Professional architecture for secure scale</h2>
@@ -315,12 +427,19 @@ function App() {
             </p>
           </div>
           <div className="metric-grid">
-            {metrics.map((metric) => (
-              <article key={metric.label} className="metric-card">
-                <strong>{metric.value}</strong>
-                <span>{metric.label}</span>
-              </article>
-            ))}
+            {metrics.map((metric, index) => {
+              const metricRef = useRef(null);
+              const isVisible = useIntersectionObserver(metricRef, { threshold: 0.3 });
+              
+              return (
+                <article key={metric.label} className="metric-card">
+                  <strong ref={metricRef}>
+                    {isVisible ? <AnimatedCounter end={metric.value} duration={2000} /> : metric.value}
+                  </strong>
+                  <span>{metric.label}</span>
+                </article>
+              );
+            })}
           </div>
           <div className="cta-banner">
             <div>
@@ -334,9 +453,9 @@ function App() {
               Schedule Consultation
             </a>
           </div>
-        </section>
+        </AnimatedSection>
 
-        <section id="resources" className="section section-alt">
+        <AnimatedSection id="resources" className="section section-alt">
           <div className="container">
             <div className="section-heading">
               <p className="eyebrow">Knowledge center</p>
@@ -356,7 +475,7 @@ function App() {
               ))}
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         <section id="contact" className="section container">
           <div className="contact-layout">
