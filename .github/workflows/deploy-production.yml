@@ -65,7 +65,8 @@ jobs:
       # Supports both this repo's names and common names used in other projects (e.g. sheflms).
       DEPLOY_HOST: ${{ secrets.SSH_HOST != '' && secrets.SSH_HOST || secrets.VPS_HOST }}
       DEPLOY_USER: ${{ secrets.SSH_USER != '' && secrets.SSH_USER || secrets.VPS_USER }}
-      DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.SSH_PRIVATE_KEY || secrets.SSH_KEY }}
+      RAW_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.SSH_PRIVATE_KEY || secrets.SSH_KEY }}
+      B64_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_B64 != '' && secrets.SSH_PRIVATE_KEY_B64 || secrets.SSH_KEY_B64 }}
       DEPLOY_PORT: ${{ secrets.SSH_PORT != '' && secrets.SSH_PORT || secrets.VPS_PORT }}
       DEPLOY_PATH_VALUE: ${{ secrets.DEPLOY_PATH != '' && secrets.DEPLOY_PATH || secrets.APP_PATH }}
       PM2_APP_NAME_VALUE: ${{ secrets.PM2_APP_NAME != '' && secrets.PM2_APP_NAME || secrets.PM2_NAME }}
@@ -77,12 +78,27 @@ jobs:
           name: deploy_bundle
           path: .
 
+      - name: Prepare SSH Key File
+        run: |
+          set -euo pipefail
+          if [[ -n "${B64_PRIVATE_KEY:-}" ]]; then
+            echo "$B64_PRIVATE_KEY" | base64 --decode > .tmp_deploy_key
+          elif [[ -n "${RAW_PRIVATE_KEY:-}" ]]; then
+            printf '%s\n' "$RAW_PRIVATE_KEY" > .tmp_deploy_key
+          else
+            echo "Missing SSH private key secret." >&2
+            exit 1
+          fi
+
+          chmod 600 .tmp_deploy_key
+          ssh-keygen -y -f .tmp_deploy_key > /dev/null
+
       - name: Copy Artifact to Server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
-          key: ${{ env.DEPLOY_KEY }}
+          key_path: .tmp_deploy_key
           port: ${{ env.DEPLOY_PORT || 22 }}
           source: "deploy_bundle.tar.gz"
           target: "/tmp"
@@ -95,7 +111,7 @@ jobs:
         with:
           host: ${{ env.DEPLOY_HOST }}
           username: ${{ env.DEPLOY_USER }}
-          key: ${{ env.DEPLOY_KEY }}
+          key_path: .tmp_deploy_key
           port: ${{ env.DEPLOY_PORT || 22 }}
           envs: DEPLOY_PATH,PM2_APP_NAME
           script: |
@@ -112,3 +128,7 @@ jobs:
             "$WORK_DIR/scripts/deploy-from-bundle.sh" "$WORK_DIR" "$APP_ROOT" "$PM2_NAME"
 
             rm -rf "$WORK_DIR" /tmp/deploy_bundle.tar.gz
+
+      - name: Cleanup SSH Key File
+        if: always()
+        run: rm -f .tmp_deploy_key
