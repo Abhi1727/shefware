@@ -2,9 +2,13 @@
 set -euo pipefail
 
 # Load common profile files so PATH includes node/npm in non-interactive CI SSH sessions.
+# Some distro profile scripts reference unset variables (e.g. byobu + LC_BYOBU),
+# so temporarily relax nounset while sourcing.
+set +u
 [[ -f /etc/profile ]] && source /etc/profile || true
 [[ -f "$HOME/.profile" ]] && source "$HOME/.profile" || true
 [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc" || true
+set -u
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 BUNDLE_DIR="${1:-}"
