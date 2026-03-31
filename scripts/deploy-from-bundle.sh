@@ -21,6 +21,20 @@ resolve_cmd() {
     command -v "$cmd"
     return 0
   fi
+  shopt -s nullglob
+  local nvm_candidates=(
+    "$HOME"/.nvm/versions/node/*/bin/"$cmd"
+    "/root"/.nvm/versions/node/*/bin/"$cmd"
+    "/home"/*/.nvm/versions/node/*/bin/"$cmd"
+  )
+  for candidate in "${nvm_candidates[@]}"; do
+    if [[ -x "$candidate" ]]; then
+      echo "$candidate"
+      shopt -u nullglob
+      return 0
+    fi
+  done
+  shopt -u nullglob
   for candidate in "/usr/local/bin/$cmd" "/usr/bin/$cmd" "/bin/$cmd"; do
     if [[ -x "$candidate" ]]; then
       echo "$candidate"
