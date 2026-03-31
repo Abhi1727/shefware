@@ -1,0 +1,114 @@
+name: Deploy Production
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: shefware-production-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Frontend Bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+            backend/package-lock.json
+
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm ci --prefix frontend
+          npm ci --prefix backend
+
+      - name: Build Frontend
+        run: npm run build --prefix frontend
+
+      - name: Prepare Deploy Bundle
+        run: |
+          mkdir -p deploy_bundle/frontend deploy_bundle/scripts
+          cp -r backend deploy_bundle/backend
+          rm -rf deploy_bundle/backend/node_modules
+          mkdir -p deploy_bundle/frontend/dist
+          cp -r frontend/dist/. deploy_bundle/frontend/dist/
+          cp scripts/apply-indexing-mode.sh deploy_bundle/scripts/
+          cp scripts/deploy-from-bundle.sh deploy_bundle/scripts/
+          chmod +x deploy_bundle/scripts/*.sh
+          tar -czf deploy_bundle.tar.gz -C deploy_bundle .
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy_bundle
+          path: deploy_bundle.tar.gz
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to shefware.com
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      # Supports both this repo's names and common names used in other projects (e.g. sheflms).
+      DEPLOY_HOST: ${{ secrets.SSH_HOST != '' && secrets.SSH_HOST || secrets.VPS_HOST }}
+      DEPLOY_USER: ${{ secrets.SSH_USER != '' && secrets.SSH_USER || secrets.VPS_USER }}
+      DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.SSH_PRIVATE_KEY || secrets.SSH_KEY }}
+      DEPLOY_PORT: ${{ secrets.SSH_PORT != '' && secrets.SSH_PORT || secrets.VPS_PORT }}
+      DEPLOY_PATH_VALUE: ${{ secrets.DEPLOY_PATH != '' && secrets.DEPLOY_PATH || secrets.APP_PATH }}
+      PM2_APP_NAME_VALUE: ${{ secrets.PM2_APP_NAME != '' && secrets.PM2_APP_NAME || secrets.PM2_NAME }}
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy_bundle
+          path: .
+
+      - name: Copy Artifact to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
+          source: "deploy_bundle.tar.gz"
+          target: "/tmp"
+
+      - name: Run Remote Deployment
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DEPLOY_PATH: ${{ env.DEPLOY_PATH_VALUE }}
+          PM2_APP_NAME: ${{ env.PM2_APP_NAME_VALUE }}
+        with:
+          host: ${{ env.DEPLOY_HOST }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ env.DEPLOY_KEY }}
+          port: ${{ env.DEPLOY_PORT || 22 }}
+          envs: DEPLOY_PATH,PM2_APP_NAME
+          script: |
+            set -euo pipefail
+
+            WORK_DIR="/tmp/shefware-deploy-${{ github.sha }}"
+            APP_ROOT="${DEPLOY_PATH:-/var/www/shefware}"
+            PM2_NAME="${PM2_APP_NAME:-shefware-api}"
+
+            mkdir -p "$WORK_DIR"
+            tar -xzf /tmp/deploy_bundle.tar.gz -C "$WORK_DIR"
+            chmod +x "$WORK_DIR/scripts/"*.sh
+
+            "$WORK_DIR/scripts/deploy-from-bundle.sh" "$WORK_DIR" "$APP_ROOT" "$PM2_NAME"
+
+            rm -rf "$WORK_DIR" /tmp/deploy_bundle.tar.gz
