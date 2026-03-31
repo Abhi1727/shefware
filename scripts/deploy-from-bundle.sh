@@ -67,10 +67,16 @@ fi
 BACKEND_DIR="$APP_ROOT/backend"
 FRONTEND_DIST_DIR="$APP_ROOT/frontend/dist"
 SCRIPTS_DIR="$APP_ROOT/scripts"
+NODE_BIN="$(resolve_cmd node || true)"
 NPM_BIN="$(resolve_cmd npm || true)"
 PM2_BIN="$(resolve_cmd pm2 || true)"
 RSYNC_BIN="$(resolve_cmd rsync || true)"
 CURL_BIN="$(resolve_cmd curl || true)"
+
+if [[ -z "$NODE_BIN" ]]; then
+  echo "node not found in PATH during deployment." >&2
+  exit 1
+fi
 
 if [[ -z "$NPM_BIN" ]]; then
   echo "npm not found in PATH during deployment." >&2
@@ -91,6 +97,9 @@ if [[ -z "$CURL_BIN" ]]; then
   echo "curl not found in PATH during deployment." >&2
   exit 1
 fi
+
+# Ensure /usr/bin/env node works even when tools are discovered via absolute paths.
+export PATH="$(dirname "$NODE_BIN"):$(dirname "$NPM_BIN"):$(dirname "$PM2_BIN"):$PATH"
 
 mkdir -p "$BACKEND_DIR" "$FRONTEND_DIST_DIR" "$SCRIPTS_DIR"
 
