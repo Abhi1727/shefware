@@ -2,11 +2,10 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import "./App.css";
 
 const navItems = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Process", href: "#process" },
-  { label: "Why Shefware", href: "#why-shefware" },
-  { label: "Resources", href: "#resources" },
-  { label: "Contact", href: "#contact" },
+  { label: "PRODUCTS", href: "#solutions" },
+  { label: "SERVICES", href: "#process" },
+  { label: "MARKET PLACE", href: "#why-shefware" },
+  { label: "WHY SHEFWARE", href: "#why-shefware" },
 ];
 
 const partners = [
@@ -272,6 +271,20 @@ function App() {
             <span className="brand-mark">S</span>
             <span>Shefware</span>
           </a>
+          
+          <div className="header-utils">
+            <a href="#support" className="header-link">Support</a>
+            <a href="#about" className="header-link">About Us</a>
+            <a href="#contact" className="header-link">Contact Us</a>
+            <button className="btn btn-offer">OFFER</button>
+            <button className="search-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+            </button>
+          </div>
+          
           <button
             type="button"
             className="menu-toggle"
@@ -291,68 +304,38 @@ function App() {
                 {item.label}
               </a>
             ))}
-            <a href="#contact" className="btn btn-primary nav-cta">
-              Book a Demo
-            </a>
           </nav>
         </div>
       </header>
 
       <main id="main-content">
         <section className="hero-section">
-          <div className="container hero-grid">
-            <div className="hero-content">
-              <p className="eyebrow">AI-powered enterprise data migration</p>
-              <h1>
-                Transform Data.
-                <br />
-                Simplify Migration.
-                <br />
-                Enable AI Innovation.
-              </h1>
-              <p className="hero-text">
-                Shefware helps organizations move from legacy infrastructure to
-                modern cloud ecosystems with performance, governance, and
-                reliability built in.
-              </p>
-              <div className="hero-actions">
-                <a href="#contact" className="btn btn-primary">
-                  Start Your Project
-                </a>
-                <a href="#process" className="btn btn-secondary">
-                  Explore Process
-                </a>
+          <div className="hero-background">
+            <div className="hero-overlay"></div>
+          </div>
+          <div className="container hero-content">
+            <h1 className="hero-title">
+              <span className="title-white">Transform Data.</span>
+              <span className="title-blue">Simplify Migration.</span>
+              <span className="title-white">Enable AI Innovation.</span>
+            </h1>
+            <p className="hero-description">
+              Shefware is an AI-driven SaaS platform for email migration, conversion, and backup. Built to make email management simple, quick, and reliable.
+            </p>
+            <div className="hero-statistics">
+              <div className="stat-item">
+                <div className="stat-number">1 Million+</div>
+                <div className="stat-label">HAPPY CLIENTS</div>
               </div>
-              <div className="hero-kpis">
-                <div>
-                  <strong>1M+</strong>
-                  <span>Mailboxes migrated</span>
-                </div>
-                <div>
-                  <strong>100+</strong>
-                  <span>Migration workflows</span>
-                </div>
-                <div>
-                  <strong>10+</strong>
-                  <span>Years in delivery</span>
-                </div>
+              <div className="stat-item">
+                <div className="stat-number">100+</div>
+                <div className="stat-label">PRODUCTS</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">10+</div>
+                <div className="stat-label">YEARS EXPERIENCE</div>
               </div>
             </div>
-            <aside className="hero-panel">
-              <h3>Migration Control Center</h3>
-              <p>
-                Configure source systems, choose targets, enforce policy, and
-                monitor each batch in real-time.
-              </p>
-              <ul>
-                <li>End-to-end encryption and audit trails</li>
-                <li>Cutover planning with rollback checkpoints</li>
-                <li>Built-in validation and exception reporting</li>
-              </ul>
-              <a href="#contact" className="panel-link">
-                Request implementation support
-              </a>
-            </aside>
           </div>
         </section>
 
