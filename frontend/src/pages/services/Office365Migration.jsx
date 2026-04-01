@@ -1,0 +1,844 @@
+import { useEffect, useState } from 'react';
+
+const Office365Migration = () => {
+  useEffect(() => {
+    document.title = 'Office 365 Migration Services - Shefware';
+  }, []);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    country: '',
+    date: '',
+    hours: '09 AM',
+    mins: '00',
+    zone: 'EST',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    alert('Thank you for your inquiry! We will contact you shortly.');
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      country: '',
+      date: '',
+      hours: '09 AM',
+      mins: '00',
+      zone: 'EST',
+    });
+  };
+
+  return (
+    <div className="service-page">
+      <section className="service-hero">
+        <div className="container">
+          <div className="service-hero-content">
+            <h1>Shefware Office 365 Migration Services</h1>
+            <p className="hero-description">Expert Office 365 Migration Solutions</p>
+            <p className="service-detailed-description">Shefware Office 365 Migration Services ensure a smooth transition from legacy systems to Microsoft 365 with zero downtime, preserving all data integrity and user experience throughout the transition. Our comprehensive migration services handle everything from planning and preparation to execution and post-migration support.</p>
+            
+            <div className="service-stats">
+              <div className="stat-item">
+                <h3>99.9%</h3>
+                <p>SUCCESS RATE</p>
+              </div>
+              <div className="stat-item">
+                <h3>60%</h3>
+                <p>TIME REDUCTION</p>
+              </div>
+              <div className="stat-item">
+                <h3>1000+</h3>
+                <p>MIGRATIONS COMPLETED</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="service-hero-form">
+            <h3>Let's connect</h3>
+            <form onSubmit={handleFormSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="name">Name*</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    placeholder="Jane" 
+                    value={formData.name} 
+                    onChange={handleInputChange} 
+                    required 
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="phone">Phone*</label>
+                  <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    placeholder="+1 (555) 000-0000" 
+                    value={formData.phone} 
+                    onChange={handleInputChange} 
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">Email*</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  placeholder="jane.doe@enterprise.com" 
+                  value={formData.email} 
+                  onChange={handleInputChange} 
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="country">Select Your Country</label>
+                <select 
+                  id="country" 
+                  name="country" 
+                  value={formData.country} 
+                  onChange={handleInputChange}
+                >
+                  <option value="">Choose a country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                  <option value="IN">India</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div className="form-section">
+                <p className="form-section-title">Please choose an appropriate time for a callback (Optional)</p>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="date">Date</label>
+                    <input 
+                      type="date" 
+                      id="date" 
+                      name="date" 
+                      value={formData.date} 
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="hours">Hours</label>
+                    <select 
+                      id="hours" 
+                      name="hours" 
+                      value={formData.hours} 
+                      onChange={handleInputChange}
+                    >
+                      <option value="09 AM">09 AM</option>
+                      <option value="10 AM">10 AM</option>
+                      <option value="11 AM">11 AM</option>
+                      <option value="12 PM">12 PM</option>
+                      <option value="01 PM">01 PM</option>
+                      <option value="02 PM">02 PM</option>
+                      <option value="03 PM">03 PM</option>
+                      <option value="04 PM">04 PM</option>
+                      <option value="05 PM">05 PM</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="mins">Mins</label>
+                    <select 
+                      id="mins" 
+                      name="mins" 
+                      value={formData.mins} 
+                      onChange={handleInputChange}
+                    >
+                      <option value="00">00</option>
+                      <option value="15">15</option>
+                      <option value="30">30</option>
+                      <option value="45">45</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="zone">Zone</label>
+                    <select 
+                      id="zone" 
+                      name="zone" 
+                      value={formData.zone} 
+                      onChange={handleInputChange}
+                    >
+                      <option value="EST">EST</option>
+                      <option value="CST">CST</option>
+                      <option value="MST">MST</option>
+                      <option value="PST">PST</option>
+                      <option value="GMT">GMT</option>
+                      <option value="CET">CET</option>
+                      <option value="IST">IST</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <button type="submit" className="form-submit">Submit Request</button>
+              
+              <p className="form-privacy">By submitting this form you agree to the terms in our privacy policy.</p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section className="key-benefits-section">
+        <div className="container">
+          <div className="key-benefits-content">
+            <div className="benefits-left">
+              <h2>Key Benefits of Our Office 365 Migration Service</h2>
+              <div className="blue-underline"></div>
+              <div className="benefits-list">
+                <div className="benefit-item">
+                  <div className="checkmark-icon">✓</div>
+                  <p>Zero-downtime migration with business continuity ensuring your operations run smoothly throughout the transition</p>
+                </div>
+                <div className="benefit-item">
+                  <div className="checkmark-icon">✓</div>
+                  <p>99.9% data integrity guarantee with comprehensive validation and verification protocols for all migrated content</p>
+                </div>
+                <div className="benefit-item">
+                  <div className="checkmark-icon">✓</div>
+                  <p>Reduced migration time by up to 60% with our optimized migration tools and automated processes</p>
+                </div>
+                <div className="benefit-item">
+                  <div className="checkmark-icon">✓</div>
+                  <p>Minimal user disruption and training requirements with seamless user experience transition</p>
+                </div>
+                <div className="benefit-item">
+                  <div className="checkmark-icon">✓</div>
+                  <p>Comprehensive post-migration support ensuring optimal performance and user adoption</p>
+                </div>
+              </div>
+            </div>
+            <div className="benefits-right">
+              <div className="benefits-image">
+                <img src="/images/office365-migration.svg" alt="Office 365 Migration Benefits" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="office365-migration-section">
+        <div className="container">
+          <div className="office365-header">
+            <h2>Shefware Core Office 365 Migration Solutions</h2>
+            <p>Shefware provides comprehensive Office 365 migration solutions, divided into 4 types, each designed to address specific migration challenges and requirements.</p>
+          </div>
+          
+          <div className="timeline-container">
+            <div className="timeline-line"></div>
+            
+            <div className="timeline-item timeline-left">
+              <div className="timeline-card">
+                <div className="timeline-number">1</div>
+                <div className="timeline-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <h3>Mailbox Migration</h3>
+                <p>Complete mailbox migration with full folder structure preservation and metadata integrity</p>
+              </div>
+            </div>
+
+            <div className="timeline-item timeline-right">
+              <div className="timeline-card">
+                <div className="timeline-number">2</div>
+                <div className="timeline-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </div>
+                <h3>File & Document Migration</h3>
+                <p>OneDrive and SharePoint migration with permission mapping and version history preservation</p>
+              </div>
+            </div>
+
+            <div className="timeline-item timeline-left">
+              <div className="timeline-card">
+                <div className="timeline-number">3</div>
+                <div className="timeline-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </div>
+                <h3>Teams Collaboration Migration</h3>
+                <p>Microsoft Teams migration with chat history, channels, and team configurations</p>
+              </div>
+            </div>
+
+            <div className="timeline-item timeline-right">
+              <div className="timeline-card">
+                <div className="timeline-number">4</div>
+                <div className="timeline-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <h3>Calendar & Contacts Migration</h3>
+                <p>Complete calendar and contact migration with meeting scheduling and distribution lists</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="migration-works-section">
+        <div className="container">
+          <div className="section-header">
+            <h1>How Shefware Office 365 Migration Works</h1>
+            <p>Our Office 365 migration process ensures seamless transition to Microsoft 365 with comprehensive planning, execution, and validation to guarantee business continuity and user satisfaction.</p>
+          </div>
+
+          <div className="migration-journey-visualizer">
+            <div className="background-abstract-flow"></div>
+            <div className="horizontal-journey-paths-desktop">
+              <svg width="1136" height="95" viewBox="0 0 1136 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 47.5H1136" stroke="#C9DBFE" strokeWidth="2" strokeDasharray="4 4"/>
+              </svg>
+            </div>
+            <div className="horizontal-journey-paths-desktop-bottom">
+              <svg width="1136" height="203" viewBox="0 0 1136 203" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 101.5H1136" stroke="#C9DBFE" strokeWidth="2" strokeDasharray="4 4"/>
+              </svg>
+            </div>
+
+            <div className="milestone-nodes-bento-grid">
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <line x1="10" y1="9" x2="8" y2="9"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">1</div>
+                  </div>
+                  <h3>Discovery & Assessment</h3>
+                  <p>Comprehensive analysis of current infrastructure, data volume, user requirements, and migration scope.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">2</div>
+                  </div>
+                  <h3>Planning & Design</h3>
+                  <p>Develop detailed migration strategy, configure Microsoft 365 tenant, and establish success criteria.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 11l-6 6v3h9l3-3"/>
+                        <path d="M22 12l-4-6v3h-9l-3 3"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">3</div>
+                  </div>
+                  <h3>Environment Preparation</h3>
+                  <p>Set up Microsoft 365 environment, configure user accounts, licenses, and security settings.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">4</div>
+                  </div>
+                  <h3>Pilot Migration</h3>
+                  <p>Execute pilot migration with select users to validate process and identify potential issues.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">5</div>
+                  </div>
+                  <h3>Full Migration Execution</h3>
+                  <p>Execute complete migration with real-time monitoring, progress tracking, and issue resolution.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">6</div>
+                  </div>
+                  <h3>Validation & Testing</h3>
+                  <p>Comprehensive testing of migrated data, user access, functionality, and performance optimization.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="9 11 12 14 22 4"/>
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">7</div>
+                  </div>
+                  <h3>User Training & Adoption</h3>
+                  <p>Provide comprehensive training, documentation, and support for successful user adoption.</p>
+                </div>
+              </div>
+
+              <div className="step-item">
+                <div className="step-card">
+                  <div className="step-icon-wrapper">
+                    <div className="step-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                      </svg>
+                    </div>
+                    <div className="step-number">8</div>
+                  </div>
+                  <h3>Post-Migration Support</h3>
+                  <p>Provide ongoing support, optimization, and decommissioning of legacy systems.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="secure-migration-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Secure and Reliable Office 365 Migration Solutions</h2>
+            <p>Our migration protocol ensures your data is protected with enterprise-grade security throughout the entire transition process. We employ multi-layered protection to safeguard your critical business data.</p>
+          </div>
+
+          <div className="feature-grid">
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="20" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3>End-to-End Encryption</h3>
+              <p>We encrypt data during migration, ensuring complete protection against unauthorized access.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <h3>Zero Data Loss</h3>
+              <p>Our comprehensive validation ensures 99.9% data integrity with zero loss guarantee.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </div>
+              <h3>Coexistence Management</h3>
+              <p>Seamless coexistence during migration ensures continuous business operations.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="24" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <h3>Automated Provisioning</h3>
+              <p>Streamlined user account creation and licensing with automated provisioning.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="25" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9 11 12 14 22 4"/>
+                  <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                </svg>
+              </div>
+              <h3>Real-Time Progress Tracking</h3>
+              <p>Comprehensive monitoring and reporting for complete visibility into migration progress.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <svg width="25" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M1 12s4-8 11-8 11 8 4 8-11 8-11-8-4-8z"/>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3 4-3 9-3 9 1.34 9 3z"/>
+                </svg>
+              </div>
+              <h3>Rollback Capabilities</h3>
+              <p>Advanced rollback capabilities ensure failed migrations can be safely reversed.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="compliance-section">
+        <div className="container">
+          <div className="compliance-content">
+            <div className="compliance-info">
+              <h2>Certified Compliance Standards</h2>
+              <p>Our Office 365 migration platform adheres to global security certifications including SOC2 Type II, GDPR, and HIPAA compliance to ensure your migration meets legal and professional standards.</p>
+              <div className="compliance-tags">
+                <div className="compliance-tag">SOC2 Certified</div>
+                <div className="compliance-tag">GDPR Compliant</div>
+                <div className="compliance-tag">ISO 27001</div>
+              </div>
+            </div>
+            <div className="compliance-image">
+              <img src="/images/secure-infrastructure.png" alt="Secure Infrastructure" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="why-choose-shefware-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Why Choose Shefware Office 365 Migration Services?</h2>
+            <p>Discover the advantages that make Shefware the trusted choice for Office 365 migrations</p>
+          </div>
+
+          <div className="features-horizontal-timeline">
+            <div className="timeline-connection-line"></div>
+            
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3>Safety & Security</h3>
+              <p>Our service ensures your migration data is encrypted and protected with multi-layer security protocols.</p>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <h3>Zero Downtime</h3>
+              <p>We provide migration solutions with zero downtime and complete business continuity.</p>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
+                  <polyline points="13 2 13 9 20 9"/>
+                </svg>
+              </div>
+              <h3>Comprehensive Migration</h3>
+              <p>Users can migrate mailboxes, files, teams, and all collaboration data with full functionality.</p>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+              <h3>Compliance Ready</h3>
+              <p>Shefware adheres to all legal compliance requirements including GDPR, HIPAA, and industry regulations.</p>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 010 7.75"/>
+                </svg>
+              </div>
+              <h3>Expert Support</h3>
+              <p>Our Service provides 24/7 expert support from certified Microsoft 365 migration specialists.</p>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <h3>Proven Methodology</h3>
+              <p>Users benefit from our proven migration methodology with thousands of successful migrations.</p>
+            </div>
+          </div>
+
+          <div className="stats-section">
+            <div className="stats-grid">
+              <div className="stat-card">
+                <h3>99.9%</h3>
+                <p>Success Rate</p>
+              </div>
+              <div className="stat-card">
+                <h3>60%</h3>
+                <p>Time Reduction</p>
+              </div>
+              <div className="stat-card">
+                <h3>1000+</h3>
+                <p>Migrations Completed</p>
+              </div>
+              <div className="stat-card">
+                <h3>24/7</h3>
+                <p>Expert Support</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonial Carousel Section */}
+      <section className="testimonial-carousel">
+        <div className="container">
+          <div className="testimonial-header">
+            <h2 className="testimonial-title">what our client says</h2>
+            <a href="#" className="read-more-link">Read more...</a>
+          </div>
+          
+          <div className="testimonial-carousel-container">
+            <div className="testimonial-track">
+              <div className="testimonial-card">
+                <div className="testimonial-content">
+                  <div className="star-rating">
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                  </div>
+                  <p className="testimonial-quote">
+                    "Shefware's Office 365 migration service was exceptional. They migrated our entire organization with zero downtime and perfect data integrity. Their team's expertise was invaluable throughout the process."
+                  </p>
+                </div>
+                <div className="client-info">
+                  <div className="client-avatar">
+                    <img src="https://via.placeholder.com/48x48" alt="David Wilson" />
+                  </div>
+                  <div className="client-details">
+                    <h4 className="client-name">David Wilson</h4>
+                    <p className="client-title">CIO</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="testimonial-card">
+                <div className="testimonial-content">
+                  <div className="star-rating">
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                    <span className="star">★</span>
+                  </div>
+                  <p className="testimonial-quote">
+                    "The migration from our legacy systems to Office 365 was seamless with Shefware. Their automated provisioning and real-time monitoring gave us complete confidence in the process."
+                  </p>
+                </div>
+                <div className="client-info">
+                  <div className="client-avatar">
+                    <img src="https://via.placeholder.com/48x48" alt="Sarah Mitchell" />
+                  </div>
+                  <div className="client-details">
+                    <h4 className="client-name">Sarah Mitchell</h4>
+                    <p className="client-title">IT Director</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="carousel-controls">
+              <button className="carousel-btn prev-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button className="carousel-btn next-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            
+            <div className="carousel-dots">
+              <button className="dot active"></button>
+              <button className="dot"></button>
+              <button className="dot"></button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Decorative icon overlay */}
+        <div className="testimonial-decoration">
+          <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 10C100 10 40 40 40 100C40 160 100 190 100 190C100 190 160 160 160 100C160 40 100 10 100 10Z" fill="currentColor" opacity="0.03"/>
+          </svg>
+        </div>
+      </section>
+
+      <section className="service-details">
+        <div className="container">
+          {/* <div className="service-content">
+            <h2>Expert Office 365 Migration Solutions</h2>
+            <p>Our comprehensive Office 365 migration services ensure a smooth transition from legacy systems to Microsoft 365. We handle everything from planning and preparation to execution and post-migration support.</p>
+            
+            <div className="service-features">
+              <h3>Migration Capabilities</h3>
+              <ul>
+                <li>Mailbox migration with full folder structure preservation</li>
+                <li>Calendar and contact synchronization</li>
+                <li>OneDrive for Business file migration</li>
+                <li>SharePoint site and content migration</li>
+                <li>Teams chat and channel migration</li>
+                <li>Public folder and archive migration</li>
+              </ul>
+            </div>
+
+            <div className="service-features">
+              <h3>Advanced Features</h3>
+              <ul>
+                <li>Pre-migration assessment and reporting</li>
+                <li>Coexistence management during transition</li>
+                <li>Automated user provisioning and licensing</li>
+                <li>Custom migration scheduling and throttling</li>
+                <li>Real-time progress tracking and reporting</li>
+                <li>Rollback capabilities for failed migrations</li>
+              </ul>
+            </div>
+
+            <div className="service-benefits">
+              <h3>Business Benefits</h3>
+              <ul>
+                <li>Zero-downtime migration with business continuity</li>
+                <li>99.9% data integrity guarantee</li>
+                <li>Reduced migration time by up to 60%</li>
+                <li>Minimal user disruption and training requirements</li>
+                <li>Comprehensive post-migration support</li>
+              </ul>
+            </div>
+          </div> */}
+        </div>
+      </section>
+
+      <footer className="footer-section">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-brand">
+              <h3>Shefware</h3>
+              <p>Leading provider of Office 365 migration and Microsoft 365 transformation solutions. We help businesses seamlessly migrate to Microsoft 365 with cutting-edge technology and expert support.</p>
+            </div>
+            <div className="footer-column">
+              <h4>Products</h4>
+              <ul>
+                <li><a href="#">Office 365 Migration</a></li>
+                <li><a href="#">Data Migration</a></li>
+                <li><a href="#">Cloud Backup</a></li>
+                <li><a href="#">Security Tools</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4>Solutions</h4>
+              <ul>
+                <li><a href="#">Enterprise</a></li>
+                <li><a href="#">Small Business</a></li>
+                <li><a href="#">Education</a></li>
+                <li><a href="#">Healthcare</a></li>
+              </ul>
+            </div>
+            <div className="footer-column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+            <div className="footer-social">
+              <h4>Find Us on</h4>
+              <div className="social-icons">
+                <a href="#" className="social-icon">f</a>
+                <a href="#" className="social-icon">t</a>
+                <a href="#" className="social-icon">in</a>
+                <a href="#" className="social-icon">ig</a>
+              </div>
+              <div className="email-subscription">
+                <input type="email" placeholder="Enter your email" />
+                <button>Subscribe</button>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 Shefware. All rights reserved.</p>
+            <div className="footer-bottom-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Office365Migration;
