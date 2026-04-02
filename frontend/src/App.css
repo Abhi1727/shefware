@@ -9159,3 +9159,236 @@
     margin-top: 32px;
   }
 }
+
+/* ==========================================================
+   Professional responsive layout overrides
+   Normalizes Figma-exported fixed sizing and positioning.
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: min(1200px, calc(100% - 2.5rem)) !important;
+  margin-inline: auto !important;
+}
+
+.page-shell main {
+  overflow-x: clip;
+}
+
+.hero-section,
+.client-logo-section,
+.featured-solutions,
+.migration-experts,
+.cta-bar,
+.architectural-intelligence,
+.bento-grid-features-section,
+.service-reliability-section,
+.email-ecosystem-section,
+.how-it-works-section,
+.learning-center-section,
+.testimonials-carousel-section,
+.footer-section,
+.cta-footer-top {
+  width: 100% !important;
+}
+
+.hero-grid,
+.migration-experts .container,
+.why-shefware-content {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  align-items: center;
+}
+
+.hero-content,
+.migration-content,
+.content-left,
+.metrics-right {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.solutions-container {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  height: auto !important;
+  position: static !important;
+}
+
+.solution-card {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  min-height: 260px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+}
+
+.solution-shadow {
+  display: none;
+}
+
+.metrics-grid-2x3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.metrics-row {
+  display: contents;
+}
+
+.metric-item {
+  width: 100% !important;
+  min-height: 112px;
+}
+
+.platforms-grid,
+.platform-row {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.platform-row {
+  width: 100%;
+}
+
+.platform-item {
+  min-width: 170px;
+  flex: 1 1 200px;
+}
+
+.features-grid,
+.learning-center-cards,
+.testimonials-container,
+.product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.feature-card,
+.resource-card,
+.testimonial-card,
+.product-card {
+  width: 100% !important;
+  min-height: 100%;
+}
+
+.email-providers-row {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.email-provider-card {
+  width: 100% !important;
+}
+
+.footer-content {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+  gap: 1rem;
+}
+
+.marketplace-container {
+  display: grid !important;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1.25rem;
+  width: min(1200px, calc(100% - 2.5rem));
+  margin: 2rem auto;
+}
+
+.marketplace-sidebar {
+  position: sticky;
+  top: 88px;
+  align-self: start;
+}
+
+.marketplace-main,
+.promo-banner,
+.banner-background {
+  width: 100% !important;
+}
+
+@media (max-width: 1100px) {
+  .solutions-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .features-grid,
+  .learning-center-cards,
+  .testimonials-container,
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .email-providers-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .marketplace-container {
+    grid-template-columns: 1fr;
+  }
+
+  .marketplace-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(1200px, calc(100% - 1.25rem)) !important;
+  }
+
+  .hero-grid,
+  .migration-experts .container,
+  .why-shefware-content {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions-container,
+  .features-grid,
+  .learning-center-cards,
+  .testimonials-container,
+  .product-grid,
+  .metrics-grid-2x3,
+  .email-providers-row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+}
