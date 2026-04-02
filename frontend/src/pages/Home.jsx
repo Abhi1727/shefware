@@ -1,40 +1,40 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 
 const clientLogos = [
-  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.png" },
-  { name: "Microsoft", width: "78px", path: "/images/microsoft.png" },
-  { name: "Cisco", width: "83px", path: "/images/cisco.png" },
-  { name: "AWS", width: "74px", path: "/images/aws.png" },
-  { name: "IBM", width: "110px", path: "/images/ibm.png" },
-  { name: "Capgemini", width: "188px", path: "/images/capgemini.png" },
+  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.svg" },
+  { name: "Microsoft", width: "78px", path: "/images/microsoft.svg" },
+  { name: "Cisco", width: "83px", path: "/images/cisco.svg" },
+  { name: "AWS", width: "74px", path: "/images/aws.svg" },
+  { name: "IBM", width: "110px", path: "/images/ibm.svg" },
+  { name: "Capgemini", width: "188px", path: "/images/capgemini.svg" },
 ];
 
 const featuredSolutions = [
   {
     title: "Office 365 Migration",
     description: "We safely migrate mailboxes, contacts, folders, and calendars between Microsoft tenants with no loss of data.",
-    icon: "/images/microsoft-office.png",
+    icon: "/images/microsoft-office.svg",
     borderColor: "#3B82F6",
     position: { left: "0px", right: "954px", top: "40px" }
   },
   {
     title: "Tenant Migration",
     description: "Without any timeout between tenants, migrate users, mailboxes, and permissions.",
-    icon: "/images/data-migration.png",
+    icon: "/images/data-migration.svg",
     borderColor: "#EF4444",
     position: { left: "318px", right: "636px", top: "40px" }
   },
   {
     title: "Email Conversion",
     description: "Easily export Outlook data files quickly and securely with high file support.",
-    icon: "/images/gemini-generated.png",
+    icon: "/images/gemini-generated.svg",
     borderColor: "#22C55E",
     position: { left: "636px", right: "318px", top: "40px" }
   },
   {
     title: "Email Backup",
     description: "Safeguard email data with upgraded IMAP and local backup tools.",
-    icon: "/images/backup-icon.png",
+    icon: "/images/backup-icon.svg",
     borderColor: "#F97316",
     position: { left: "954px", right: "0px", top: "40px" }
   }
@@ -408,7 +408,7 @@ const Home = () => {
           </div>
           <div className="migration-image">
             <img 
-              src="/images/male-entrepreneur-using-computer-while-working-office.jpg" 
+              src="/images/male-entrepreneur-using-computer-while-working-office.svg" 
               alt="Male entrepreneur using computer while working in office"
             />
           </div>
@@ -675,7 +675,7 @@ const Home = () => {
               <div className="email-provider-card gmail-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/gmail-icon.png" alt="Gmail" />
+                  <img src="/images/gmail-icon.svg" alt="Gmail" />
                   <span>Gmail</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -683,7 +683,7 @@ const Home = () => {
               <div className="email-provider-card microsoft-365-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/microsoft365-icon.png" alt="Microsoft 365" />
+                  <img src="/images/microsoft365-icon.svg" alt="Microsoft 365" />
                   <span>Microsoft 365</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -691,7 +691,7 @@ const Home = () => {
               <div className="email-provider-card imap-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/imap-icon.png" alt="IMAP Servers" />
+                  <img src="/images/imap-icon.svg" alt="IMAP Servers" />
                   <span>IMAP Servers</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -699,7 +699,7 @@ const Home = () => {
               <div className="email-provider-card outlook-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/outlook-icon.png" alt="Outlook" />
+                  <img src="/images/outlook-icon.svg" alt="Outlook" />
                   <span>Outlook</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -707,7 +707,7 @@ const Home = () => {
               <div className="email-provider-card exchange-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/exchange-icon.png" alt="Exchange" />
+                  <img src="/images/exchange-icon.svg" alt="Exchange" />
                   <span>Exchange</span>
                 </div>
                 <div className="card-border-bottom"></div>

@@ -101,9 +101,9 @@ const Header = () => {
       <header className="top-nav-bar">
         <div className="container">
           <nav className="top-nav">
-            <a href="#support">Support</a>
-            <a href="#about">About Us</a>
-            <a href="#contact">Contact Us</a>
+            <Link to="/services">Support</Link>
+            <Link to="/why-shefware">About Us</Link>
+            <Link to="/market-place">Contact Us</Link>
           </nav>
         </div>
       </header>
@@ -180,9 +180,9 @@ const Header = () => {
                   <path d="m21 21-4.35-4.35"></path>
                 </svg>
               </button>
-              <a href="#contact" className="btn btn-primary nav-cta">
+              <Link to="/market-place" className="btn btn-primary nav-cta">
                 Book a Demo
-              </a>
+              </Link>
             </div>
           </nav>
         </div>

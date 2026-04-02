@@ -542,7 +542,7 @@ const TenantToTenantMigration = () => {
               </div>
             </div>
             <div className="compliance-image">
-              <img src="/images/secure-infrastructure.png" alt="Secure Infrastructure" />
+              <img src="/images/secure-infrastructure.svg" alt="Secure Infrastructure" />
             </div>
           </div>
         </div>

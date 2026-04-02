@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const MarketPlace = () => {
   const [selectedCategory, setSelectedCategory] = useState('office-365');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
     { id: 'office-365', name: 'Office 365 Migration', icon: '📧' },
@@ -67,6 +68,17 @@ const MarketPlace = () => {
     return stars;
   };
 
+  const filteredProducts = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    return products.filter((product) => {
+      const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+      const matchesQuery = normalizedQuery
+        ? `${product.title} ${product.description}`.toLowerCase().includes(normalizedQuery)
+        : true;
+      return matchesCategory && matchesQuery;
+    });
+  }, [products, searchQuery, selectedCategory]);
+
   return (
     <div className="marketplace-container">
       {/* Sidebar */}
@@ -77,7 +89,8 @@ const MarketPlace = () => {
         
         <nav className="sidebar-nav">
           {categories.map((category) => (
-            <div
+            <button
+              type="button"
               key={category.id}
               className={`nav-item ${selectedCategory === category.id ? 'active' : ''}`}
               onClick={() => setSelectedCategory(category.id)}
@@ -86,7 +99,7 @@ const MarketPlace = () => {
                 <div className="icon-dot"></div>
               </div>
               <span className="nav-text">{category.name}</span>
-            </div>
+            </button>
           ))}
         </nav>
         
@@ -116,9 +129,11 @@ const MarketPlace = () => {
                     type="text"
                     placeholder="Search for migration tools, backup solutions..."
                     className="search-input"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
                   />
                 </div>
-                <button className="search-button">
+                <button type="button" className="search-button">
                   <span>Search</span>
                 </button>
               </div>
@@ -131,7 +146,7 @@ const MarketPlace = () => {
 
         {/* Product Grid */}
         <section className="product-grid">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-image">
                 <div className="image-placeholder">
@@ -167,6 +182,16 @@ const MarketPlace = () => {
               </div>
             </div>
           ))}
+          {filteredProducts.length === 0 && (
+            <div className="product-card">
+              <div className="product-content">
+                <h3 className="product-title">No matching tools</h3>
+                <p className="product-description">
+                  Try a different category or search term to find the right migration solution.
+                </p>
+              </div>
+            </div>
+          )}
         </section>
       </main>
     </div>

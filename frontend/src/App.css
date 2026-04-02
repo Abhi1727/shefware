@@ -478,7 +478,7 @@
 .secure-data-center {
   width: 512px;
   height: 512px;
-  background: url('/images/secure-data-center.png');
+  background: url('/images/secure-data-center.svg');
   box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
@@ -4892,7 +4892,7 @@
 .server-image {
   width: 479px;
   height: 479px;
-  background: url(/images/srver.jpg);
+  background: url(/images/srver.svg);
   mix-blend-mode: multiply;
   opacity: 0.9;
   border-radius: 4px;
@@ -7868,6 +7868,11 @@
   flex: none;
   align-self: stretch;
   flex-grow: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  font: inherit;
 }
 
 .nav-item:hover {

@@ -228,7 +228,7 @@ const Office365Migration = () => {
             </div>
             <div className="benefits-right">
               <div className="benefits-image">
-                <img src="/images/office365-migration.svg" alt="Office 365 Migration Benefits" />
+                <img src="/images/office-365-migration.svg" alt="Office 365 Migration Benefits" />
               </div>
             </div>
           </div>
@@ -542,7 +542,7 @@ const Office365Migration = () => {
               </div>
             </div>
             <div className="compliance-image">
-              <img src="/images/secure-infrastructure.png" alt="Secure Infrastructure" />
+              <img src="/images/secure-infrastructure.svg" alt="Secure Infrastructure" />
             </div>
           </div>
         </div>

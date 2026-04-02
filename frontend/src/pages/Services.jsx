@@ -1,55 +1,55 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 
 const clientLogos = [
-  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.png" },
-  { name: "Microsoft", width: "78px", path: "/images/microsoft.png" },
-  { name: "Cisco", width: "83px", path: "/images/cisco.png" },
-  { name: "AWS", width: "74px", path: "/images/aws.png" },
-  { name: "IBM", width: "110px", path: "/images/ibm.png" },
-  { name: "Capgemini", width: "188px", path: "/images/capgemini.png" },
+  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.svg" },
+  { name: "Microsoft", width: "78px", path: "/images/microsoft.svg" },
+  { name: "Cisco", width: "83px", path: "/images/cisco.svg" },
+  { name: "AWS", width: "74px", path: "/images/aws.svg" },
+  { name: "IBM", width: "110px", path: "/images/ibm.svg" },
+  { name: "Capgemini", width: "188px", path: "/images/capgemini.svg" },
 ];
 
 const services = [
   {
     title: "Cloud Backup",
     description: "Dependable cloud backup for full data protection.",
-    icon: "/images/cloud-backup-icon.png",
+    icon: "/images/cloud-backup-icon.svg",
     position: { left: "0px", top: "0px" }
   },
   {
     title: "Tenant Migration",
     description: "Effective tenant migration with minimum difficulty.",
-    icon: "/images/tenant-migration-icon.png",
+    icon: "/images/tenant-migration-icon.svg",
     position: { left: "405.33px", top: "0px" }
   },
   {
     title: "Tenant to Tenant Migration",
     description: "Safe and secure tenant-to-tenant migration.",
-    icon: "/images/tenant-to-tenant-icon.png",
+    icon: "/images/tenant-to-tenant-icon.svg",
     position: { left: "810.67px", top: "0px" }
   },
   {
     title: "Microsoft Teams Migration",
     description: "Easy transfer of Teams data and collaboration.",
-    icon: "/images/teams-migration-icon.png",
+    icon: "/images/teams-migration-icon.svg",
     position: { left: "0px", top: "310.13px" }
   },
   {
     title: "Email Conversion",
     description: "Fast and accurate email structure conversion.",
-    icon: "/images/email-conversion-icon.png",
+    icon: "/images/email-conversion-icon.svg",
     position: { left: "405.33px", top: "310.13px" }
   },
   {
     title: "Office 365 Migration",
     description: "Zero downtime and complete migration securely.",
-    icon: "/images/office-365-icon.png",
+    icon: "/images/office-365-icon.svg",
     position: { left: "810.67px", top: "310.13px" }
   },
   {
     title: "Google Workspace to Microsoft 365 Migration",
     description: "Smoothly migrate data to Microsoft 365.",
-    icon: "/images/google-to-m365-icon.png",
+    icon: "/images/google-to-m365-icon.svg",
     position: { left: "405.33px", top: "155.06px" }
   }
 ];
@@ -422,7 +422,7 @@ const Services = () => {
           </div>
           <div className="migration-image">
             <img 
-              src="/images/male-entrepreneur-using-computer-while-working-office.jpg" 
+              src="/images/male-entrepreneur-using-computer-while-working-office.svg" 
               alt="Male entrepreneur using computer while working in office"
             />
           </div>
@@ -689,7 +689,7 @@ const Services = () => {
               <div className="email-provider-card gmail-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/gmail-icon.png" alt="Gmail" />
+                  <img src="/images/gmail-icon.svg" alt="Gmail" />
                   <span>Gmail</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -697,7 +697,7 @@ const Services = () => {
               <div className="email-provider-card microsoft-365-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/microsoft365-icon.png" alt="Microsoft 365" />
+                  <img src="/images/microsoft365-icon.svg" alt="Microsoft 365" />
                   <span>Microsoft 365</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -705,7 +705,7 @@ const Services = () => {
               <div className="email-provider-card imap-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/imap-icon.png" alt="IMAP Servers" />
+                  <img src="/images/imap-icon.svg" alt="IMAP Servers" />
                   <span>IMAP Servers</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -713,7 +713,7 @@ const Services = () => {
               <div className="email-provider-card outlook-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/outlook-icon.png" alt="Outlook" />
+                  <img src="/images/outlook-icon.svg" alt="Outlook" />
                   <span>Outlook</span>
                 </div>
                 <div className="card-border-bottom"></div>
@@ -721,7 +721,7 @@ const Services = () => {
               <div className="email-provider-card exchange-card">
                 <div className="card-border-top"></div>
                 <div className="card-content">
-                  <img src="/images/exchange-icon.png" alt="Exchange" />
+                  <img src="/images/exchange-icon.svg" alt="Exchange" />
                   <span>Exchange</span>
                 </div>
                 <div className="card-border-bottom"></div>
