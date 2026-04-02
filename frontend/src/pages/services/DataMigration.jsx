@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const DataMigration = () => {
+  const location = useLocation();
+  const isTenantMigrationRoute = location.pathname === '/services/tenant-migration';
+
   useEffect(() => {
-    document.title = 'Data Migration Services - Shefware';
-  }, []);
+    document.title = isTenantMigrationRoute
+      ? 'Tenant Migration - Shefware'
+      : 'Data Migration Services - Shefware';
+  }, [isTenantMigrationRoute]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -42,9 +48,21 @@ const DataMigration = () => {
       <section className="service-hero">
         <div className="container">
           <div className="service-hero-content">
-            <h1>Shefware Data Migration Services</h1>
-            <p className="hero-description">Comprehensive Data Migration Solutions</p>
-            <p className="service-detailed-description">Shefware Data Migration Services provide end-to-end solutions for moving critical business data between various platforms, ensuring data integrity, security, and minimal business disruption throughout the migration process. Our expert team handles everything from planning and preparation to execution and post-migration support.</p>
+            <h1>
+              {isTenantMigrationRoute
+                ? 'Shefware Tenant Migration'
+                : 'Shefware Data Migration Services'}
+            </h1>
+            <p className="hero-description">
+              {isTenantMigrationRoute
+                ? 'Effective tenant migration with minimum difficulty'
+                : 'Comprehensive Data Migration Solutions'}
+            </p>
+            <p className="service-detailed-description">
+              {isTenantMigrationRoute
+                ? 'Move users, mailboxes, and permissions between Microsoft 365 tenants with structured planning, validation checkpoints, and expert execution support.'
+                : 'Shefware Data Migration Services provide end-to-end solutions for moving critical business data between various platforms, ensuring data integrity, security, and minimal business disruption throughout the migration process. Our expert team handles everything from planning and preparation to execution and post-migration support.'}
+            </p>
             
             <div className="service-stats">
               <div className="stat-item">

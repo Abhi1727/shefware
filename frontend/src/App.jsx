@@ -26,6 +26,7 @@ function App() {
         <Route path="services/email-conversion" element={<EmailConversion />} />
         <Route path="services/tenant-to-tenant-migration" element={<TenantToTenantMigration />} />
         <Route path="services/google-workspace-to-microsoft-365-migration" element={<GoogleWorkspaceToMicrosoft365Migration />} />
+        <Route path="services/tenant-migration" element={<DataMigration />} />
         <Route path="services/data-migration" element={<DataMigration />} />
       </Route>
     </Routes>
