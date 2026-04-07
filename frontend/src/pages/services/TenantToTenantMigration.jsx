@@ -1,8 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const TenantToTenantMigration = () => {
   useEffect(() => {
     document.title = 'Tenant to Tenant Migration Services - Shefware';
+
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const featureObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = parseInt(entry.target.dataset.index);
+          setTimeout(() => {
+            setVisibleFeatures(prev => new Set(prev).add(index));
+          }, index * 150); // Staggered animation
+        }
+      });
+    }, observerOptions);
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = parseInt(entry.target.dataset.index);
+          setTimeout(() => {
+            setAnimatedStats(prev => new Set(prev).add(index));
+          }, index * 200); // Staggered stats animation
+        }
+      });
+    }, observerOptions);
+
+    // Observe feature items
+    featureRefs.current.forEach((ref) => {
+      if (ref) featureObserver.observe(ref);
+    });
+
+    // Observe stats items
+    statsRefs.current.forEach((ref) => {
+      if (ref) statsObserver.observe(ref);
+    });
+
+    return () => {
+      featureObserver.disconnect();
+      statsObserver.disconnect();
+    };
   }, []);
 
   const [formData, setFormData] = useState({
@@ -15,6 +58,13 @@ const TenantToTenantMigration = () => {
     mins: '00',
     zone: 'EST',
   });
+
+  const [visibleFeatures, setVisibleFeatures] = useState(new Set());
+  const [animatedStats, setAnimatedStats] = useState(new Set());
+  const [activeFeature, setActiveFeature] = useState(null);
+  const [expandedFeature, setExpandedFeature] = useState(null);
+  const featureRefs = useRef([]);
+  const statsRefs = useRef([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,12 +87,35 @@ const TenantToTenantMigration = () => {
     });
   };
 
+  const handleFeatureClick = (index) => {
+    setActiveFeature(activeFeature === index ? null : index);
+    setExpandedFeature(expandedFeature === index ? null : index);
+  };
+
+  const handleFeatureHover = (index) => {
+    setActiveFeature(index);
+  };
+
+  const handleFeatureLeave = () => {
+    if (expandedFeature === null) {
+      setActiveFeature(null);
+    }
+  };
+
   return (
     <div className="service-page">
       <section className="service-hero">
+        <div className="floating-elements">
+          <div className="floating-element element-1"></div>
+          <div className="floating-element element-2"></div>
+          <div className="floating-element element-3"></div>
+          <div className="floating-element element-4"></div>
+          <div className="floating-element element-5"></div>
+          <div className="floating-element element-6"></div>
+        </div>
         <div className="container">
           <div className="service-hero-content">
-            <h1>Shefware Tenant to Tenant Migration Office 365 Service</h1>
+            <h1><span>Shefware</span> <span>Tenant</span> <span>to</span> <span>Tenant</span> <span>Migration</span> <span>Office</span> <span>365</span> <span>Service</span></h1>
             <p className="hero-description">Seamless Transfer of your digital workspace</p>
             <p className="service-detailed-description">Shefware Tenant to Tenant Migration or Office 365 Migration to Office 365 Migration is the process of transferring mailboxes, files, users, and Teams from one Microsoft 365 Tenant to another Microsoft 365 Tenant. The common reasons the organization does Tenant-to-Tenant Migration include mergers & acquisitions, divestitures, and rebranding the company.</p>
             
@@ -558,7 +631,17 @@ const TenantToTenantMigration = () => {
           <div className="features-horizontal-timeline">
             <div className="timeline-connection-line"></div>
             
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[0] = el} 
+                 data-index="0"
+                 onClick={() => handleFeatureClick(0)}
+                 onMouseEnter={() => handleFeatureHover(0)}
+                 onMouseLeave={handleFeatureLeave}
+                 style={{
+                   opacity: visibleFeatures.has(0) ? 1 : 0,
+                   transform: visibleFeatures.has(0) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -566,9 +649,39 @@ const TenantToTenantMigration = () => {
               </div>
               <h3>Safety & Security</h3>
               <p>Our service ensures the migrated data is encrypted and protected.</p>
+              {expandedFeature === 0 && (
+                <div className="feature-expanded-content">
+                  <div className="expanded-content-inner">
+                    <h4>Advanced Security Features</h4>
+                    <ul>
+                      <li>End-to-end encryption during migration</li>
+                      <li>Multi-factor authentication protocols</li>
+                      <li>Real-time security monitoring</li>
+                      <li>Compliance with international standards</li>
+                    </ul>
+                    <div className="feature-metrics">
+                      <div className="metric-item">
+                        <span className="metric-value">256-bit</span>
+                        <span className="metric-label">Encryption</span>
+                      </div>
+                      <div className="metric-item">
+                        <span className="metric-value">99.9%</span>
+                        <span className="metric-label">Uptime</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[1] = el} 
+                 data-index="1"
+                 style={{
+                   opacity: visibleFeatures.has(1) ? 1 : 0,
+                   transform: visibleFeatures.has(1) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="12" cy="12" r="10"/>
@@ -579,7 +692,14 @@ const TenantToTenantMigration = () => {
               <p>We provide you with the service where there is minimal to zero downtime.</p>
             </div>
 
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[2] = el} 
+                 data-index="2"
+                 style={{
+                   opacity: visibleFeatures.has(2) ? 1 : 0,
+                   transform: visibleFeatures.has(2) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
@@ -590,7 +710,14 @@ const TenantToTenantMigration = () => {
               <p>Users can easily migrate multiple data and files through our Shefware Tenant-to-Tenant Migration.</p>
             </div>
 
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[3] = el} 
+                 data-index="3"
+                 style={{
+                   opacity: visibleFeatures.has(3) ? 1 : 0,
+                   transform: visibleFeatures.has(3) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -600,7 +727,14 @@ const TenantToTenantMigration = () => {
               <p>Shefware adheres to all legal laws and regulations to execute this process.</p>
             </div>
 
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[4] = el} 
+                 data-index="4"
+                 style={{
+                   opacity: visibleFeatures.has(4) ? 1 : 0,
+                   transform: visibleFeatures.has(4) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
@@ -613,7 +747,14 @@ const TenantToTenantMigration = () => {
               <p>Our Service ensures that the teams, files, and emails are migrated smoothly to the new tenant for user collaboration.</p>
             </div>
 
-            <div className="feature-item">
+            <div className="feature-item" 
+                 ref={(el) => featureRefs.current[5] = el} 
+                 data-index="5"
+                 style={{
+                   opacity: visibleFeatures.has(5) ? 1 : 0,
+                   transform: visibleFeatures.has(5) ? 'translateY(0)' : 'translateY(30px)',
+                   transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                 }}>
               <div className="feature-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
@@ -627,20 +768,48 @@ const TenantToTenantMigration = () => {
 
           <div className="stats-section">
             <div className="stats-grid">
-              <div className="stat-card">
-                <h3>12M+</h3>
+              <div className="stat-card" 
+                   ref={(el) => statsRefs.current[0] = el} 
+                   data-index="0"
+                   style={{
+                     opacity: animatedStats.has(0) ? 1 : 0,
+                     transform: animatedStats.has(0) ? 'translateY(0)' : 'translateY(20px)',
+                     transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                   }}>
+                <h3>{animatedStats.has(0) ? '12M+' : '0'}</h3>
                 <p>Items Migrated</p>
               </div>
-              <div className="stat-card">
-                <h3>99.9%</h3>
+              <div className="stat-card" 
+                   ref={(el) => statsRefs.current[1] = el} 
+                   data-index="1"
+                   style={{
+                     opacity: animatedStats.has(1) ? 1 : 0,
+                     transform: animatedStats.has(1) ? 'translateY(0)' : 'translateY(20px)',
+                     transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                   }}>
+                <h3>{animatedStats.has(1) ? '99.9%' : '0%'}</h3>
                 <p>Success Rate</p>
               </div>
-              <div className="stat-card">
-                <h3>450+</h3>
+              <div className="stat-card" 
+                   ref={(el) => statsRefs.current[2] = el} 
+                   data-index="2"
+                   style={{
+                     opacity: animatedStats.has(2) ? 1 : 0,
+                     transform: animatedStats.has(2) ? 'translateY(0)' : 'translateY(20px)',
+                     transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                   }}>
+                <h3>{animatedStats.has(2) ? '450+' : '0'}</h3>
                 <p>Enterprise Clients</p>
               </div>
-              <div className="stat-card">
-                <h3>24/7</h3>
+              <div className="stat-card" 
+                   ref={(el) => statsRefs.current[3] = el} 
+                   data-index="3"
+                   style={{
+                     opacity: animatedStats.has(3) ? 1 : 0,
+                     transform: animatedStats.has(3) ? 'translateY(0)' : 'translateY(20px)',
+                     transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                   }}>
+                <h3>{animatedStats.has(3) ? '24/7' : '0'}</h3>
                 <p>Expert Support</p>
               </div>
             </div>
