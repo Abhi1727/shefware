@@ -1,0 +1,329 @@
+.home-clean {
+  background: #ffffff;
+  color: #0b1f52;
+}
+
+.home-clean__container {
+  width: min(1240px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.home-clean__hero {
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(1, 27, 72, 0.92) 0%, rgba(1, 34, 93, 0.8) 42%, rgba(1, 34, 93, 0.24) 70%),
+    url("/images/male-entrepreneur-using-computer-while-working-office.svg");
+  background-position: center right;
+  background-size: cover;
+}
+
+.home-clean__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 6rem 0 5rem;
+}
+
+.home-clean__hero-copy {
+  max-width: 46rem;
+}
+
+.home-clean__hero-copy h1 {
+  margin: 0;
+  color: #ffffff;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.2rem, 6vw, 4.3rem);
+  font-weight: 800;
+}
+
+.home-clean__hero-copy h1 span {
+  color: #2f7cff;
+}
+
+.home-clean__hero-copy p {
+  margin: 1.25rem 0 0;
+  max-width: 38rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.65;
+  font-size: 1.05rem;
+}
+
+.home-clean__hero-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.home-clean__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.78rem 1.25rem;
+}
+
+.home-clean__btn--primary {
+  background: #ffd728;
+  color: #0f172a;
+}
+
+.home-clean__btn--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+.home-clean__clients {
+  padding: 3.25rem 0;
+  border-bottom: 1px solid #e7ecf3;
+}
+
+.home-clean__clients h2 {
+  margin: 0;
+  text-align: center;
+  text-transform: lowercase;
+  font-size: 2rem;
+}
+
+.home-clean__clients p {
+  margin: 0.8rem auto 0;
+  max-width: 44rem;
+  text-align: center;
+  color: #475569;
+}
+
+.home-clean__logos {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.home-clean__logos img {
+  width: 100%;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.home-clean__featured,
+.home-clean__experts,
+.home-clean__process {
+  padding: 4.25rem 0;
+}
+
+.home-clean__kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #1d4ed8;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.home-clean__kicker--left {
+  text-align: left;
+}
+
+.home-clean h2 {
+  margin: 0.45rem 0 0;
+  text-align: center;
+  font-size: clamp(1.7rem, 3.6vw, 2.75rem);
+  line-height: 1.2;
+}
+
+.home-clean__experts h2,
+.home-clean__process h2 {
+  text-align: left;
+}
+
+.home-clean__section-lede {
+  margin: 0.95rem auto 0;
+  max-width: 44rem;
+  text-align: center;
+  color: #475569;
+}
+
+.home-clean__cards {
+  margin-top: 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-clean__card {
+  border: 1px solid #dbe4f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  background: #ffffff;
+}
+
+.home-clean__card img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.home-clean__card h3 {
+  margin: 0.75rem 0 0;
+  font-size: 1.2rem;
+}
+
+.home-clean__card p {
+  margin: 0.65rem 0 0;
+  color: #334155;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.home-clean__card a {
+  display: inline-block;
+  margin-top: 0.85rem;
+  color: #1d4ed8;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.home-clean__experts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.home-clean__experts p {
+  margin: 1rem 0 0;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.home-clean__experts ul {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  color: #0b1f52;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+.home-clean__experts-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.home-clean__cta {
+  padding: 2.1rem 0;
+  border-top: 1px solid #e7ecf3;
+  border-bottom: 1px solid #e7ecf3;
+}
+
+.home-clean__cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-clean__cta h3 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.2rem, 2.7vw, 2rem);
+}
+
+.home-clean__process .home-clean__section-lede {
+  margin-left: 0;
+  text-align: left;
+}
+
+.home-clean__steps {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.home-clean__step {
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.home-clean__step h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.home-clean__step p {
+  margin: 0.55rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.home-clean__footer-cta {
+  padding: 2.8rem 0;
+  background: #0b1f52;
+}
+
+.home-clean__footer-cta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.home-clean__footer-cta h2 {
+  margin: 0;
+  text-align: left;
+  color: #ffffff;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.home-clean__footer-cta a {
+  color: #ffd728;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home-clean__contact-anchor {
+  height: 1px;
+}
+
+@media (max-width: 1100px) {
+  .home-clean__cards,
+  .home-clean__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-clean__logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .home-clean__hero {
+    min-height: 500px;
+    background-position: center;
+  }
+
+  .home-clean__experts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-clean__cta-row,
+  .home-clean__footer-cta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-clean__cards,
+  .home-clean__steps,
+  .home-clean__logos {
+    grid-template-columns: 1fr;
+  }
+}

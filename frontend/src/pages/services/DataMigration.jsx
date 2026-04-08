@@ -55,13 +55,13 @@ const DataMigration = () => {
             </h1>
             <p className="hero-description">
               {isTenantMigrationRoute
-                ? 'Effective tenant migration with minimum difficulty'
-                : 'Comprehensive Data Migration Solutions'}
+                ? 'Effective tenant migration with minimum difficulty.'
+                : 'Comprehensive data migration across platforms.'}
             </p>
             <p className="service-detailed-description">
               {isTenantMigrationRoute
-                ? 'Move users, mailboxes, and permissions between Microsoft 365 tenants with structured planning, validation checkpoints, and expert execution support.'
-                : 'Shefware Data Migration Services provide end-to-end solutions for moving critical business data between various platforms, ensuring data integrity, security, and minimal business disruption throughout the migration process. Our expert team handles everything from planning and preparation to execution and post-migration support.'}
+                ? 'Effective tenant migration with minimum difficulty—move users, mailboxes, and permissions between Microsoft 365 tenants with structured planning, validation checkpoints, and expert execution support.'
+                : 'Comprehensive data migration across platforms—end-to-end moves for critical business data with integrity, security, and minimal disruption, from planning through execution and post-migration support.'}
             </p>
             
             <div className="service-stats">

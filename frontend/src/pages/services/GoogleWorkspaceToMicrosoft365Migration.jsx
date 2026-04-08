@@ -43,8 +43,14 @@ const GoogleWorkspaceToMicrosoft365Migration = () => {
         <div className="container">
           <div className="service-hero-content">
             <h1>Shefware Google Workspace to Microsoft 365 Migration</h1>
-            <p className="hero-description">Cross-Platform Migration Excellence</p>
-            <p className="service-detailed-description">Shefware Google Workspace to Microsoft 365 Migration provides specialized migration services that facilitate smooth transition from Google Workspace to Microsoft 365, ensuring all your data, configurations, and user settings are properly transferred with minimal disruption and 100% data integrity guarantee.</p>
+            <p className="hero-description">
+              Smoothly migrate data to Microsoft 365.
+            </p>
+            <p className="service-detailed-description">
+              Smoothly migrate data to Microsoft 365—specialized move paths for
+              mail, Drive content, and identities so configurations and user
+              settings land correctly with minimal disruption.
+            </p>
             
             <div className="service-stats">
               <div className="stat-item">

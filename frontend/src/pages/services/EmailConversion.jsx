@@ -43,8 +43,14 @@ const EmailConversion = () => {
         <div className="container">
           <div className="service-hero-content">
             <h1>Shefware Email Conversion Services</h1>
-            <p className="hero-description">Professional Email Data Conversion Solutions</p>
-            <p className="service-detailed-description">Shefware Email Conversion Services provide seamless transformation between various email formats while maintaining complete data integrity, metadata, and folder structures. Perfect for legal compliance, data archiving, and system migrations with 100% data accuracy guarantee.</p>
+            <p className="hero-description">
+              Fast and accurate email structure conversion.
+            </p>
+            <p className="service-detailed-description">
+              Fast and accurate email structure conversion—transform PST, MBOX,
+              and other formats while preserving metadata and folder hierarchy for
+              compliance, archiving, and platform moves.
+            </p>
             
             <div className="service-stats">
               <div className="stat-item">

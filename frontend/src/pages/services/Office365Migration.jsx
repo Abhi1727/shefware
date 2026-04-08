@@ -43,8 +43,15 @@ const Office365Migration = () => {
         <div className="container">
           <div className="service-hero-content">
             <h1>Shefware Office 365 Migration Services</h1>
-            <p className="hero-description">Expert Office 365 Migration Solutions</p>
-            <p className="service-detailed-description">Shefware Office 365 Migration Services ensure a smooth transition from legacy systems to Microsoft 365 with zero downtime, preserving all data integrity and user experience throughout the transition. Our comprehensive migration services handle everything from planning and preparation to execution and post-migration support.</p>
+            <p className="hero-description">
+              Zero downtime and complete migration securely.
+            </p>
+            <p className="service-detailed-description">
+              Zero downtime and complete migration securely—from discovery and
+              planning through cutover and post-migration support, we move
+              mailboxes, data, and workloads to Microsoft 365 while preserving
+              integrity and user experience.
+            </p>
             
             <div className="service-stats">
               <div className="stat-item">

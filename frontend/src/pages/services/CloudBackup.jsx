@@ -43,8 +43,14 @@ const CloudBackup = () => {
         <div className="container">
           <div className="service-hero-content">
             <h1>Shefware Cloud Backup Services</h1>
-            <p className="hero-description">Secure, Reliable, and Automated Cloud Backup Solutions</p>
-            <p className="service-detailed-description">Shefware Cloud Backup Services provide enterprise-grade protection for your critical business data with automated scheduling, encryption, and rapid recovery capabilities. Our comprehensive backup solutions ensure business continuity with minimal downtime and complete data integrity across all platforms.</p>
+            <p className="hero-description">
+              Dependable cloud backup for full data protection.
+            </p>
+            <p className="service-detailed-description">
+              Dependable cloud backup for full data protection—Shefware delivers
+              enterprise-grade scheduling, encryption, and recovery so mailboxes
+              and critical data stay safe across platforms with minimal downtime.
+            </p>
             
             <div className="service-stats">
               <div className="stat-item">
