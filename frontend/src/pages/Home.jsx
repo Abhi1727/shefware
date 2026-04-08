@@ -11,7 +11,6 @@ import Ecosystem from "../components/Ecosystem";
 import Steps from "../components/Steps";
 import Resources from "../components/Resources";
 import Testimonials from "../components/Testimonials";
-import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -29,7 +28,6 @@ const Home = () => {
       <Resources />
       <Testimonials />
       <div id="contact" className="home-contact-anchor" aria-hidden />
-      <Footer />
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 
 const clientLogos = [
-  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.svg" },
-  { name: "Microsoft", width: "78px", path: "/images/microsoft.svg" },
-  { name: "Cisco", width: "83px", path: "/images/cisco.svg" },
-  { name: "AWS", width: "74px", path: "/images/aws.svg" },
-  { name: "IBM", width: "110px", path: "/images/ibm.svg" },
-  { name: "Capgemini", width: "188px", path: "/images/capgemini.svg" },
+  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jpmorgan.png" },
+  { name: "Microsoft", width: "78px", path: "/images/microsoft.png" },
+  { name: "Cisco", width: "83px", path: "/images/cisco.png" },
+  { name: "AWS", width: "74px", path: "/images/aws.png" },
+  { name: "IBM", width: "110px", path: "/images/ibm.png" },
+  { name: "Capgemini", width: "188px", path: "/images/capgemini.png" },
 ];
 
 const featuredSolutions = [

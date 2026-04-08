@@ -1,12 +1,12 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 
 const clientLogos = [
-  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jp-morgan.svg" },
-  { name: "Microsoft", width: "78px", path: "/images/microsoft.svg" },
-  { name: "Cisco", width: "83px", path: "/images/cisco.svg" },
-  { name: "AWS", width: "74px", path: "/images/aws.svg" },
-  { name: "IBM", width: "110px", path: "/images/ibm.svg" },
-  { name: "Capgemini", width: "188px", path: "/images/capgemini.svg" },
+  { name: "J.P. Morgan Chase & Co.", width: "78px", path: "/images/jpmorgan.png" },
+  { name: "Microsoft", width: "78px", path: "/images/microsoft.png" },
+  { name: "Cisco", width: "83px", path: "/images/cisco.png" },
+  { name: "AWS", width: "74px", path: "/images/aws.png" },
+  { name: "IBM", width: "110px", path: "/images/ibm.png" },
+  { name: "Capgemini", width: "188px", path: "/images/capgemini.png" },
 ];
 
 const services = [
@@ -981,68 +981,9 @@ const Services = () => {
       <section className="cta-footer-top">
         <div className="container">
           <h2>100+ Software Solutions to Help Customers.</h2>
-          <a href="#products" className="cta-button">VIEW PRODUCTS →</a>
+          <a href="/products" className="cta-button">VIEW PRODUCTS →</a>
         </div>
       </section>
-
-      {/* Footer Section */}
-      <footer className="footer-section">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-brand">
-              <h3>Shefware</h3>
-              <p>Leading provider of enterprise email migration and data management solutions. We help businesses transform their digital infrastructure with cutting-edge technology and expert support.</p>
-            </div>
-            <div className="footer-column">
-              <h4>Products</h4>
-              <ul>
-                <li><a href="#">Email Migration</a></li>
-                <li><a href="#">Data Backup</a></li>
-                <li><a href="#">Cloud Solutions</a></li>
-                <li><a href="#">Security Tools</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4>Solutions</h4>
-              <ul>
-                <li><a href="#">Enterprise</a></li>
-                <li><a href="#">Small Business</a></li>
-                <li><a href="#">Education</a></li>
-                <li><a href="#">Healthcare</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Partners</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
-            <div className="footer-social">
-              <h4>Find Us on</h4>
-              <div className="social-icons">
-                <a href="#" className="social-icon">f</a>
-                <a href="#" className="social-icon">t</a>
-                <a href="#" className="social-icon">in</a>
-                <a href="#" className="social-icon">ig</a>
-              </div>
-              <div className="email-subscription">
-                <input type="email" placeholder="Enter your email" />
-                <button>Subscribe</button>
-              </div>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2024 Shefware. All rights reserved.</p>
-            <div className="footer-bottom-links">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   );
 };

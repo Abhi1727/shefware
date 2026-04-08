@@ -15,11 +15,11 @@ const MarketPlace = () => {
     {
       id: 1,
       title: 'Office 365 Migration Tool',
-      description: 'Safely migrate mailboxes, contacts, and calendars between Microsoft tenants with… no loss of data.',
+      description: 'Safely migrate mailboxes, contacts, and calendars between Microsoft tenants with no loss of data.',
       rating: 5,
       price: '$299',
       category: 'office-365',
-      image: '/images/office-365-migration.svg'
+      image: '/images/office-365-migration.png'
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const MarketPlace = () => {
       rating: 5,
       price: '$499',
       category: 'tenant',
-      image: '/images/tenant-migration.svg'
+      image: '/images/tenant-migration.png'
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ const MarketPlace = () => {
       rating: 4.5,
       price: '$199',
       category: 'email',
-      image: '/images/email-conversion.svg'
+      image: '/images/email-conversion.png'
     },
     {
       id: 4,
@@ -46,7 +46,7 @@ const MarketPlace = () => {
       rating: 4.8,
       price: '$249',
       category: 'backup',
-      image: '/images/imap-backup.svg'
+      image: '/images/cloud-backup.png'
     }
   ];
 
