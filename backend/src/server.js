@@ -31,21 +31,36 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true, service: "shefware-api" });
 });
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const sanitize = (val) => String(val || "").trim().replace(/[<>"'`]/g, "");
+
 app.post("/api/contact", (req, res) => {
   const { fullName, email, company, message } = req.body;
 
-  if (!fullName || !email || !message) {
+  const missing = [];
+  if (!fullName) missing.push("fullName");
+  if (!email) missing.push("email");
+  if (!message) missing.push("message");
+
+  if (missing.length > 0) {
     return res.status(400).json({
       ok: false,
-      message: "fullName, email and message are required.",
+      message: `The following fields are required: ${missing.join(", ")}.`,
+    });
+  }
+
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      ok: false,
+      message: "Please provide a valid email address.",
     });
   }
 
   const cleanPayload = {
-    fullName: String(fullName).trim(),
-    email: String(email).trim().toLowerCase(),
-    company: String(company || "").trim(),
-    message: String(message).trim(),
+    fullName: sanitize(fullName),
+    email: sanitize(email).toLowerCase(),
+    company: sanitize(company),
+    message: sanitize(message),
     createdAt: new Date().toISOString(),
   };
 
@@ -54,6 +69,65 @@ app.post("/api/contact", (req, res) => {
   return res.status(201).json({
     ok: true,
     message: "Thank you. We will get back to you shortly.",
+  });
+});
+
+app.post("/api/inquiry", (req, res) => {
+  const { name, email, phone, country, date, hours, mins, zone } = req.body;
+
+  if (!name || !email) {
+    return res.status(400).json({
+      ok: false,
+      message: "Name and email are required.",
+    });
+  }
+
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      ok: false,
+      message: "Please provide a valid email address.",
+    });
+  }
+
+  const cleanPayload = {
+    name: sanitize(name),
+    email: sanitize(email).toLowerCase(),
+    phone: sanitize(phone),
+    country: sanitize(country),
+    date: sanitize(date),
+    hours: sanitize(hours),
+    mins: sanitize(mins),
+    zone: sanitize(zone),
+    createdAt: new Date().toISOString(),
+  };
+
+  console.log("New service inquiry:", cleanPayload);
+
+  return res.status(201).json({
+    ok: true,
+    message: "Thank you for your inquiry! We will contact you shortly.",
+  });
+});
+
+app.post("/api/newsletter", (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ ok: false, message: "Email address is required." });
+  }
+
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ ok: false, message: "Please provide a valid email address." });
+  }
+
+  console.log("Newsletter subscription:", {
+    email: sanitize(email).toLowerCase(),
+    subscribedAt: new Date().toISOString(),
+  });
+
+  return res.status(201).json({
+    ok: true,
+    message: "You're subscribed! Thank you for signing up.",
   });
 });
 

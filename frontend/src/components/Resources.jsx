@@ -15,7 +15,7 @@ const Resources = () => {
   ];
 
   return (
-    <section className="resources">
+    <section id="resources" className="resources">
       <h2>Resources &amp; Learning</h2>
       <div className="grid">
         {items.map((item) => (

@@ -21,20 +21,30 @@ const TenantToTenantMigration = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = (e) => {
+  const [submitState, setSubmitState] = useState({ status: 'idle', message: '' });
+  const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your inquiry! We will contact you shortly.');
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      country: '',
-      date: '',
-      hours: '09 AM',
-      mins: '00',
-      zone: 'EST',
-    });
+    setSubmitState({ status: 'loading', message: '' });
+    try {
+      const response = await fetch(`${apiBaseUrl}/inquiry`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || 'Unable to send your request right now.');
+      }
+      setSubmitState({ status: 'success', message: data.message || 'Thank you! We will contact you shortly.' });
+      setFormData({ name: '', phone: '', email: '', country: '', date: '', hours: '09 AM', mins: '00', zone: 'EST' });
+    } catch (error) {
+      setSubmitState({
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Something went wrong. Please try again.',
+      });
+    }
   };
 
   return (
@@ -196,8 +206,16 @@ const TenantToTenantMigration = () => {
                 </div>
               </div>
               
-              <button type="submit" className="form-submit">Submit Request</button>
-              
+              {submitState.status === 'success' && (
+                <p className="form-success-msg">{submitState.message}</p>
+              )}
+              {submitState.status === 'error' && (
+                <p className="form-error-msg">{submitState.message}</p>
+              )}
+              <button type="submit" className="form-submit" disabled={submitState.status === 'loading'}>
+                {submitState.status === 'loading' ? 'Sending...' : 'Submit Request'}
+              </button>
+
               <p className="form-privacy">By submitting this form you agree to the terms in our privacy policy.</p>
             </form>
           </div>

@@ -10,6 +10,7 @@ import EmailConversion from './pages/services/EmailConversion';
 import TenantToTenantMigration from './pages/services/TenantToTenantMigration';
 import GoogleWorkspaceToMicrosoft365Migration from './pages/services/GoogleWorkspaceToMicrosoft365Migration';
 import DataMigration from './pages/services/DataMigration';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 function App() {
@@ -26,8 +27,8 @@ function App() {
         <Route path="services/email-conversion" element={<EmailConversion />} />
         <Route path="services/tenant-to-tenant-migration" element={<TenantToTenantMigration />} />
         <Route path="services/google-workspace-to-microsoft-365-migration" element={<GoogleWorkspaceToMicrosoft365Migration />} />
-        <Route path="services/tenant-migration" element={<DataMigration />} />
         <Route path="services/data-migration" element={<DataMigration />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
