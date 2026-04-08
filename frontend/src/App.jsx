@@ -11,7 +11,6 @@ import TenantToTenantMigration from './pages/services/TenantToTenantMigration';
 import GoogleWorkspaceToMicrosoft365Migration from './pages/services/GoogleWorkspaceToMicrosoft365Migration';
 import DataMigration from './pages/services/DataMigration';
 import './App.css';
-import './styles/home-landing.css';
 
 function App() {
   return (
