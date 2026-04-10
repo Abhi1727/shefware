@@ -1,23 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import logoAws from '../assets/aws.png'
-import logoCapgemini from '../assets/capgemini.png'
-import logoCisco from '../assets/cisco.png'
 import heroIllustration from '../assets/hero.png'
-import logoIbm from '../assets/ibm.png'
-import logoJpmorgan from '../assets/jpmorgan.png'
-import logoMicrosoft from '../assets/microsoft.png'
+import { HomeLogoMarquee } from '../components/home/HomeLogoMarquee'
+import { HomePromoCarousel } from '../components/home/HomePromoCarousel'
 import { SITE } from '../config/site'
 import { PRODUCT_SLUGS, PRODUCTS } from '../data/products'
-
-const clientLogos = [
-  { src: logoMicrosoft, alt: 'Microsoft' },
-  { src: logoAws, alt: 'Amazon Web Services' },
-  { src: logoCapgemini, alt: 'Capgemini' },
-  { src: logoCisco, alt: 'Cisco' },
-  { src: logoIbm, alt: 'IBM' },
-  { src: logoJpmorgan, alt: 'JPMorgan Chase' },
-] as const
 
 const valueProps = [
   {
@@ -139,6 +126,8 @@ export function HomePage() {
 
   return (
     <div className="bg-[#f8f9fa]">
+      <HomePromoCarousel />
+
       {/* Hero + value props — [Figma 72:372](https://www.figma.com/design/qog60m4YVUE6cwuGJkt7ML/shefware-1?node-id=72-372&m=dev) */}
       <section className="relative overflow-hidden border-b border-[#e2e8f0] bg-white">
         <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden>
@@ -213,29 +202,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Logo bar */}
-      <section className="border-b border-[#e2e8f0] bg-[#f8f9fa] py-12 sm:py-14">
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
-          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-md">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#64748b]">Our clients</p>
-              <p className="mt-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-[#191c1d] sm:text-3xl">
-                Supporting organizations with reliable email migration and data management solutions
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 lg:justify-end">
-              {clientLogos.map((logo) => (
-                <img
-                  key={logo.alt}
-                  src={logo.src}
-                  alt={logo.alt}
-                  className="h-9 w-auto max-w-[6.5rem] object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeLogoMarquee />
 
       {/* Product grid — maps to catalog + Figma product frames */}
       <section id="email-tools" className="py-16 sm:py-20">

@@ -13,6 +13,8 @@ Production marketing site and product catalog for [Shefware](https://shefware.co
 | `src/layouts/RootLayout.tsx` | Shell: header, `<main>`, footer, page title |
 | `src/components/layout/` | `SiteHeader`, `SiteFooter`, `BrandMark`, icons |
 | `src/pages/` | Route screens (`HomePage`, `MarketplacePage`, services, …) |
+| `src/components/home/` | Home-only blocks: promo carousel, logo marquee |
+| `public/home-banners/` | Drop promo images here; list paths in `src/config/homeBanners.ts` |
 
 ## Commands
 
