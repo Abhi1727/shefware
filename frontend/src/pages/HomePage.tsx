@@ -7,8 +7,8 @@ import heroIllustration from '../assets/hero.png'
 import logoIbm from '../assets/ibm.png'
 import logoJpmorgan from '../assets/jpmorgan.png'
 import logoMicrosoft from '../assets/microsoft.png'
+import { SITE } from '../config/site'
 import { PRODUCT_SLUGS, PRODUCTS } from '../data/products'
-import { HOME_HERO_ILLUSTRATION_FALLBACK } from './homePageAssets'
 
 const clientLogos = [
   { src: logoMicrosoft, alt: 'Microsoft' },
@@ -195,7 +195,7 @@ export function HomePage() {
               width={572}
               height={320}
               loading="lazy"
-              onError={() => setHeroImgSrc(HOME_HERO_ILLUSTRATION_FALLBACK)}
+              onError={() => setHeroImgSrc(SITE.heroImageFallbackUrl)}
             />
           </div>
         </div>

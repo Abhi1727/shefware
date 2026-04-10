@@ -1,12 +1,9 @@
 import { type FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { SITE } from '../../config/site'
 import { subscribeNewsletter } from '../../lib/api'
-
-/** Figma MCP — replace with /public assets if URLs expire. Source: node 73:821 */
-const FOOTER_SOCIAL_FACEBOOK = 'https://www.figma.com/api/mcp/asset/0cf9402e-d58e-4e15-bc7d-8c5fd1a6f628'
-const FOOTER_SOCIAL_TWITTER = 'https://www.figma.com/api/mcp/asset/6d4ee3ba-ebed-4d64-8555-43616ae3989c'
-const FOOTER_SOCIAL_LINKEDIN = 'https://www.figma.com/api/mcp/asset/05253dc9-3b21-40e0-b0c0-10b0ea97a0d0'
-const FOOTER_NEWSLETTER_ARROW = 'https://www.figma.com/api/mcp/asset/460c9f5f-babd-452d-8a94-aeb906752a27'
+import { BrandMark } from './BrandMark'
+import { IconArrowRight, IconFacebook, IconLinkedIn, IconX } from './footerIcons'
 
 const footerLink = 'text-sm text-[#99a1af] transition hover:text-white'
 
@@ -39,22 +36,9 @@ export function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-3">
             <div className="flex items-center gap-2">
-              <div
-                className="flex size-8 shrink-0 items-center justify-center rounded-[10px] text-sm font-bold text-white"
-                style={{
-                  background: 'linear-gradient(135deg, rgb(21, 93, 252) 0%, rgb(25, 60, 184) 100%)',
-                }}
-                aria-hidden
-              >
-                S
-              </div>
-              <span className="font-[family-name:var(--font-heading)] text-xl font-bold tracking-tight">
-                Shefware
-              </span>
+              <BrandMark variant="footer" />
             </div>
-            <p className="mt-4 max-w-xs text-sm leading-5 text-[#99a1af]">
-              Enterprise-grade IT solutions for cloud migration, data backup, and email security.
-            </p>
+            <p className="mt-4 max-w-xs text-sm leading-5 text-[#99a1af]">{SITE.description}</p>
           </div>
 
           <div className="lg:col-span-2">
@@ -118,9 +102,9 @@ export function SiteFooter() {
             <h3 className="font-[family-name:var(--font-heading)] text-lg font-semibold text-white">Company</h3>
             <ul className="mt-4 flex flex-col gap-2">
               <li>
-                <a className={footerLink} href="#about">
+                <Link className={footerLink} to="/#about">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
                 <Link className={footerLink} to="/services">
@@ -133,9 +117,9 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <a className={footerLink} href="#resources">
-                  Documentation
-                </a>
+                <Link className={footerLink} to="/#resources">
+                  Resources
+                </Link>
               </li>
             </ul>
           </div>
@@ -147,28 +131,28 @@ export function SiteFooter() {
                 href="https://www.facebook.com"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex size-10 items-center justify-center rounded bg-white/10 transition hover:bg-white/20"
+                className="flex size-10 items-center justify-center rounded bg-white/10 text-white transition hover:bg-white/20"
                 aria-label="Facebook"
               >
-                <img src={FOOTER_SOCIAL_FACEBOOK} alt="" className="size-5" />
+                <IconFacebook className="size-5" />
               </a>
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex size-10 items-center justify-center rounded bg-white/10 transition hover:bg-white/20"
+                className="flex size-10 items-center justify-center rounded bg-white/10 text-white transition hover:bg-white/20"
                 aria-label="X (Twitter)"
               >
-                <img src={FOOTER_SOCIAL_TWITTER} alt="" className="size-5" />
+                <IconX className="size-4" />
               </a>
               <a
                 href="https://www.linkedin.com"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex size-10 items-center justify-center rounded bg-white/10 transition hover:bg-white/20"
+                className="flex size-10 items-center justify-center rounded bg-white/10 text-white transition hover:bg-white/20"
                 aria-label="LinkedIn"
               >
-                <img src={FOOTER_SOCIAL_LINKEDIN} alt="" className="size-5" />
+                <IconLinkedIn className="size-5" />
               </a>
             </div>
             <p className="mt-6 text-xs leading-4 text-[#94a3b8]">
@@ -193,7 +177,7 @@ export function SiteFooter() {
                 className="flex shrink-0 items-center justify-center rounded-r bg-[#00429d] px-4 py-2 transition hover:bg-[#003580] disabled:opacity-60"
                 aria-label="Subscribe"
               >
-                <img src={FOOTER_NEWSLETTER_ARROW} alt="" className="size-4" />
+                <IconArrowRight className="size-4 text-white" />
               </button>
             </form>
             {newsMessage ? (
@@ -209,7 +193,7 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col gap-4 border-t border-[#1e2939] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-[#99a1af]">
-            © {year} Shefware IT Software and Services. All rights reserved.
+            © {year} {SITE.legalName}. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-6 text-sm">
             <a href="#" className={`${footerLink} whitespace-nowrap`}>
