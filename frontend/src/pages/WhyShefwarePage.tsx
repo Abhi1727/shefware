@@ -179,7 +179,7 @@ export function WhyShefwarePage() {
     <div className="relative overflow-hidden bg-white">
       {/* Ambient motion (CSS) — subtle */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-[480px] opacity-40 max-[forced-colors:active]:opacity-30"
+        className="why-page-ambient pointer-events-none absolute inset-x-0 top-0 h-[480px]"
         aria-hidden
       >
         <div className="why-page-blob-a absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#00429d]/20 blur-3xl" />

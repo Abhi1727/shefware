@@ -48,3 +48,14 @@ body {
     animation: none;
   }
 }
+
+/* Opacity for hero blobs — avoid Tailwind max-[forced-colors:…] (breaks lightningcss minify in CI) */
+.why-page-ambient {
+  opacity: 0.4;
+}
+
+@media (forced-colors: active) {
+  .why-page-ambient {
+    opacity: 0.3;
+  }
+}
