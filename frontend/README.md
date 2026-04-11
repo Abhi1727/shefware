@@ -14,7 +14,7 @@ Production marketing site and product catalog for [Shefware](https://shefware.co
 | `src/components/layout/` | `SiteHeader`, `SiteFooter`, `BrandMark`, icons |
 | `src/pages/` | Route screens (`HomePage`, `MarketplacePage`, services, …) |
 | `src/components/home/` | Home-only blocks: promo carousel, logo marquee |
-| `public/home-banners/` | Drop promo images here; list paths in `src/config/homeBanners.ts` |
+| `public/home-banners/` | Promo images; register in `homeBanners.ts`. Dev uses `placeholder.svg` when the list is empty. |
 
 ## Commands
 

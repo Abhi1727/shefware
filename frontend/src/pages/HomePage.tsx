@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import heroIllustration from '../assets/hero.png'
 import { HomeLogoMarquee } from '../components/home/HomeLogoMarquee'
 import { HomePromoCarousel } from '../components/home/HomePromoCarousel'
-import { SITE } from '../config/site'
 import { PRODUCT_SLUGS, PRODUCTS } from '../data/products'
 
 const valueProps = [
@@ -122,8 +120,6 @@ function SectionTitle({
 }
 
 export function HomePage() {
-  const [heroImgSrc, setHeroImgSrc] = useState<string>(heroIllustration)
-
   return (
     <div className="bg-[#f8f9fa]">
       <HomePromoCarousel />
@@ -134,30 +130,48 @@ export function HomePage() {
           <div className="absolute -left-32 -top-24 h-96 w-[28rem] rounded-full bg-[#0b50da] blur-[60px]" />
           <div className="absolute -bottom-24 -right-32 h-72 w-96 rounded-full bg-[#0b50da] blur-[50px]" />
         </div>
-        <div className="relative mx-auto max-w-[1200px] px-4 pb-20 pt-12 text-center sm:px-6 sm:pb-24 sm:pt-16">
-          <h1 className="mx-auto max-w-[46rem] font-[family-name:var(--font-heading)] text-4xl font-extrabold leading-[1.08] tracking-tight text-[#0f172a] sm:text-5xl sm:leading-[1.05]">
-            Empower Your Workflow with <span className="text-[#0b50da]">Shefware</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-[42rem] text-lg leading-relaxed text-[#475569] sm:text-xl">
-            Experience a modern, professional platform designed for reliability and scale. Stop managing infrastructure
-            and start building value.
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
-            <a
-              href="#value-propositions"
-              className="inline-flex min-w-[200px] items-center justify-center rounded-xl bg-[#0b50da] px-8 py-3.5 text-lg font-bold text-white shadow-[0px_20px_25px_-5px_rgba(11,80,218,0.3),0px_8px_10px_-6px_rgba(11,80,218,0.3)] transition hover:bg-[#093d99]"
-            >
-              Discover Solutions
-            </a>
-            <Link
-              to="/marketplace"
-              className="text-sm font-semibold text-[#0f172a] underline-offset-4 hover:text-[#0b50da] hover:underline"
-            >
-              Browse marketplace →
-            </Link>
+        <div className="relative mx-auto max-w-[1200px] px-4 pb-20 pt-12 sm:px-6 sm:pb-24 sm:pt-16">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+            <div className="text-center lg:text-left">
+              <h1 className="mx-auto max-w-[46rem] font-[family-name:var(--font-heading)] text-4xl font-extrabold leading-[1.08] tracking-tight text-[#0f172a] sm:text-5xl sm:leading-[1.05] lg:mx-0 lg:max-w-none">
+                Empower Your Workflow with <span className="text-[#0b50da]">Shefware</span>
+              </h1>
+              <p className="mx-auto mt-6 max-w-[42rem] text-lg leading-relaxed text-[#475569] sm:text-xl lg:mx-0">
+                Experience a modern, professional platform designed for reliability and scale. Stop managing infrastructure
+                and start building value.
+              </p>
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5 lg:justify-start">
+                <a
+                  href="#value-propositions"
+                  className="inline-flex min-w-[200px] items-center justify-center rounded-xl bg-[#0b50da] px-8 py-3.5 text-lg font-bold text-white shadow-[0px_20px_25px_-5px_rgba(11,80,218,0.3),0px_8px_10px_-6px_rgba(11,80,218,0.3)] transition hover:bg-[#093d99]"
+                >
+                  Discover Solutions
+                </a>
+                <Link
+                  to="/marketplace"
+                  className="text-sm font-semibold text-[#0f172a] underline-offset-4 hover:text-[#0b50da] hover:underline"
+                >
+                  Browse marketplace →
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex justify-center lg:justify-end">
+              <div className="w-full max-w-[min(100%,560px)] rounded-xl bg-white">
+                <img
+                  src={heroIllustration}
+                  alt="Shefware isometric platform mark — stacked secure layers"
+                  className="mx-auto block h-auto w-full object-contain"
+                  width={427}
+                  height={468}
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </div>
           </div>
 
-          <div id="value-propositions" className="mt-16 scroll-mt-24">
+          <div id="value-propositions" className="mt-16 scroll-mt-24 text-center">
             <div className="mx-auto grid max-w-[1000px] gap-8 sm:grid-cols-3 sm:gap-8">
               {valueProps.map((card) => (
                 <article
@@ -174,18 +188,6 @@ export function HomePage() {
                 </article>
               ))}
             </div>
-          </div>
-
-          <div className="mx-auto mt-16 max-w-3xl">
-            <img
-              src={heroImgSrc}
-              alt=""
-              className="mx-auto w-full max-w-lg object-contain"
-              width={572}
-              height={320}
-              loading="lazy"
-              onError={() => setHeroImgSrc(SITE.heroImageFallbackUrl)}
-            />
           </div>
         </div>
       </section>

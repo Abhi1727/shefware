@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="Promo banner placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00429d"/>
+      <stop offset="100%" style="stop-color:#0b50da"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <text x="600" y="175" fill="rgba(255,255,255,0.95)" font-size="26" font-family="system-ui,sans-serif" text-anchor="middle" font-weight="700">Home promo banner</text>
+  <text x="600" y="220" fill="rgba(255,255,255,0.85)" font-size="15" font-family="system-ui,sans-serif" text-anchor="middle">Drop images in public/home-banners/ · list them in src/config/homeBanners.ts</text>
+</svg>
